@@ -196,6 +196,7 @@ scrollTop.addEventListener('click', (e) => {
 });
 
 /*=============== CONTACT FORM ===============*/
+/*=============== CONTACT FORM ===============*/
 const contactForm = document.getElementById('contact-form');
 const contactMessage = document.getElementById('contact-message');
 
@@ -203,18 +204,31 @@ if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        contactMessage.textContent = 'Enviando mensaje...';
+        // Estado visual de carga
+        contactMessage.textContent = 'Enviando mensaje... ⏳';
         contactMessage.style.color = 'var(--first-color)';
         
-        setTimeout(() => {
-            contactMessage.textContent = '¡Mensaje enviado con éxito! 🚀';
-            contactMessage.style.color = 'var(--first-color)';
-            contactForm.reset();
-            
-            setTimeout(() => {
-                contactMessage.textContent = '';
-            }, 5000);
-        }, 2000);
+        // serviceID - templateID - #form - publicKey
+        // Datos obtenidos de tus capturas de pantalla:
+        emailjs.sendForm('service_h4np7mc', 'template_mesi807', '#contact-form', '8bj8mBek5nZGjpETZ')
+            .then(() => {
+                // Éxito: El mensaje se envió correctamente
+                contactMessage.textContent = '¡Mensaje enviado con éxito! 🚀';
+                contactMessage.style.color = 'var(--first-color)';
+                
+                // Limpiar los campos del formulario
+                contactForm.reset();
+                
+                // Borrar el mensaje de éxito después de 5 segundos
+                setTimeout(() => {
+                    contactMessage.textContent = '';
+                }, 5000);
+            }, (error) => {
+                // Error: Imprimir detalle en consola para depuración
+                console.error('Error detallado de EmailJS:', error);
+                contactMessage.textContent = 'Hubo un error al enviar el mensaje. ❌';
+                contactMessage.style.color = 'red';
+            });
     });
 }
 
