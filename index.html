@@ -3,960 +3,717 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Portafolio profesional de Álvaro Aldama - Full Stack Developer e Ingeniero en Sistemas">
-    
+    <meta name="description" content="Alvaro Aldama - Full Stack Developer e Ingeniero en Sistemas. Especialista en PWAs, React, Laravel, Firebase y automatizacion con IA en Mexico. Disponible para proyectos.">
+    <meta name="keywords" content="Alvaro Aldama, Full Stack Developer, Ingeniero en Sistemas, React, Laravel, Firebase, Python, Inteligencia Artificial, Toluca, Mexico, Code69, PWA, desarrollador web">
+    <meta name="author" content="Alvaro Aldama">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#0d1117">
+    <meta property="og:title" content="Alvaro Aldama | Full Stack Engineer & IA Developer">
+    <meta property="og:description" content="Full Stack Developer con 2 anos de experiencia. Especialista en PWAs, React, Laravel y automatizacion con IA.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="assets/img/perfil.jpeg">
+    <meta property="og:locale" content="es_MX">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Alvaro Aldama | Full Stack Engineer">
+    <meta name="twitter:description" content="Ingeniero en Sistemas & Full Stack Developer especializado en IA.">
+    <link rel="canonical" href="https://code69.dev/">
     <link rel="shortcut icon" href="assets/img/logo.png" type="image/x-icon">
-    
-    <!-- Boxicons -->
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
-    <!-- ScrollReveal -->
-    <script src="https://unpkg.com/scrollreveal"></script>
-    
-    <!-- MixItUp -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script>
-    
-    <!-- CSS -->
+    <script type="application/ld+json">
+    {"@context":"https://schema.org","@type":"Person","name":"Alvaro Aldama","jobTitle":"Full Stack Developer e Ingeniero en Sistemas","url":"https://code69.dev","sameAs":["https://github.com/Alvaro6ix"],"email":"alvaro69aldama@gmail.com","telephone":"+527227453989","knowsAbout":["React","Laravel","Firebase","Python","Inteligencia Artificial","Full Stack Development","PWA"],"address":{"@type":"PostalAddress","addressLocality":"Toluca","addressCountry":"MX"}}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
-    
     <title>Alvaro Aldama | Full Stack Engineer</title>
 </head>
 <body>
-    <!-- Scroll Progress Bar -->
-    <div class="scroll-progress" id="scroll-progress"></div>
-    
-    <!-- Loading Screen -->
-    <div class="loading-screen" id="loading-screen">
-        <div class="loading-content">
-            <div class="loading-logo">&lt;Code69 /&gt;</div>
-            <div class="loading-bar">
-                <div class="loading-progress"></div>
+
+<!-- Custom Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- Noise Texture Overlay -->
+<div class="noise-overlay" aria-hidden="true"></div>
+
+<!-- Loader -->
+<div class="loader" id="loader" aria-hidden="true">
+    <div class="loader__content">
+        <div class="loader__terminal">
+            <span class="loader__prompt">alvaro69aldama &#126;$</span>
+            <span class="loader__cmd" id="loader-cmd"></span>
+            <span class="loader__blink">_</span>
+        </div>
+        <div class="loader__bar-track">
+            <div class="loader__bar-fill" id="loader-fill"></div>
+        </div>
+        <span class="loader__pct" id="loader-pct">0%</span>
+    </div>
+</div>
+
+<!-- Scroll Progress -->
+<div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
+
+<!-- Header -->
+<header class="header" id="header">
+    <nav class="nav container">
+        <a href="#home" class="nav__logo">
+            <span class="bracket">&lt;</span>Code69<span class="bracket"> /&gt;</span>
+        </a>
+        <div class="nav__menu" id="nav-menu">
+            <ul class="nav__list">
+                <li><a href="#home"       class="nav__link active-link" data-tip="Inicio"><i class='bx bx-home-alt'></i></a></li>
+                <li><a href="#about"      class="nav__link" data-tip="Sobre mi"><i class='bx bx-user'></i></a></li>
+                <li><a href="#experience" class="nav__link" data-tip="Experiencia"><i class='bx bx-briefcase-alt-2'></i></a></li>
+                <li><a href="#skills"     class="nav__link" data-tip="Habilidades"><i class='bx bx-chip'></i></a></li>
+                <li><a href="#work"       class="nav__link" data-tip="Proyectos"><i class='bx bx-folder-open'></i></a></li>
+                <li><a href="#certificates" class="nav__link" data-tip="Certificados"><i class='bx bxs-certification'></i></a></li>
+                <li><a href="#contact"    class="nav__link" data-tip="Contacto"><i class='bx bx-message-square-detail'></i></a></li>
+            </ul>
+        </div>
+        <i class="bx bx-moon theme-btn" id="theme-button" data-tip="Cambiar tema" role="button" tabindex="0" aria-label="Cambiar tema"></i>
+    </nav>
+</header>
+
+<main class="main">
+
+<!-- ===================== HOME ===================== -->
+<section class="home section" id="home">
+    <canvas id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="home__grid-lines" aria-hidden="true"></div>
+
+    <div class="home__container container">
+        <div class="home__data">
+            <div class="home__status">
+                <span class="status__dot"></span>
+                <span>Disponible para proyectos</span>
             </div>
+            <h1 class="home__name" id="home-title">
+                <span class="name__line" data-reveal>Alvaro</span>
+                <span class="name__line" data-reveal>Aldama</span>
+            </h1>
+            <div class="home__role">
+                <span class="role__arrow">&gt;&gt;</span>
+                <span class="home__typewriter" id="typewriter-el"></span>
+                <span class="typewriter__cursor">|</span>
+            </div>
+            <div class="home__subtitle">Ingeniero en Sistemas</div>
+            <p class="home__desc" data-reveal>
+                Ingeniero en Sistemas construyendo <span class="accent">aplicaciones Full Stack</span> 
+                escalables, PWAs e integraciones con <span class="accent">Inteligencia Artificial</span>.
+            </p>
+            <div class="home__cta">
+                <a download="" href="assets/pdf/Alvaro_Aldama_Ingeniero_Sistemas.pdf" class="btn btn--ghost mag-btn">
+                    <span class="btn__inner"><i class='bx bx-download'></i> Descargar CV</span>
+                </a>
+                <a href="#contact" class="btn btn--solid mag-btn">
+                    <span class="btn__inner"><i class='bx bx-send'></i> Contactame</span>
+                </a>
+            </div>
+            <div class="home__metrics">
+                <div class="metric">
+                    <strong class="metric__num" data-count="2">0</strong>
+                    <span>Anos<br>Exp.</span>
+                </div>
+                <div class="metric__sep"></div>
+                <div class="metric">
+                    <strong class="metric__num" data-count="7">0</strong>
+                    <span>Proyectos<br>+</span>
+                </div>
+                <div class="metric__sep"></div>
+                <div class="metric">
+                    <strong class="metric__num" data-count="11">0</strong>
+                    <span>Certifi-<br>cados</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="home__visual">
+            <div class="hero__photo-wrap">
+                <div class="hero__ring r1"></div>
+                <div class="hero__ring r2"></div>
+                <div class="hero__ring r3"></div>
+                <img src="assets/img/perfil.jpeg" alt="Alvaro Aldama - Full Stack Developer" class="hero__photo" loading="eager">
+                <div class="hero__scan-line"></div>
+            </div>
+            <div class="float-tag ft1 mag-btn"><i class='bx bxl-react'></i><span>React</span></div>
+            <div class="float-tag ft2 mag-btn"><i class='bx bxl-firebase'></i><span>Firebase</span></div>
+            <div class="float-tag ft3 mag-btn"><i class='bx bxl-python'></i><span>Python</span></div>
+            <div class="float-tag ft4 mag-btn"><i class='bx bx-bot'></i><span>IA Dev</span></div>
         </div>
     </div>
 
-    <!-- Header -->
-    <header class="header" id="header">
-        <nav class="nav container">
-            <a href="#" class="nav__logo">
-                <span class="logo-bracket">&lt;</span>Code69<span class="logo-bracket"> /&gt;</span>
-            </a>
+    <div class="home__socials">
+        <a href="https://github.com/Alvaro6ix"         target="_blank" class="social__link mag-btn" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+        <a href="https://wa.me/527227453989"             target="_blank" class="social__link mag-btn" aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+        <a href="mailto:alvaro69aldama@gmail.com"                        class="social__link mag-btn" aria-label="Email"><i class='bx bx-envelope'></i></a>
+    </div>
 
-            <div class="nav__menu" id="nav-menu">
-                <ul class="nav__list">
-                    <li class="nav__item">
-                        <a href="#home" class="nav__link active-link" data-tooltip="Inicio">
-                            <i class='bx bx-home-alt'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#about" class="nav__link" data-tooltip="Sobre mí">
-                            <i class='bx bx-user'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#experience" class="nav__link" data-tooltip="Experiencia">
-                            <i class='bx bx-briefcase-alt-2'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#skills" class="nav__link" data-tooltip="Habilidades">
-                            <i class='bx bx-chip'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#work" class="nav__link" data-tooltip="Proyectos">
-                            <i class='bx bx-folder-open'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#certificates" class="nav__link" data-tooltip="Certificaciones">
-                            <i class='bx bxs-certification'></i>
-                        </a>
-                    </li>
-                    <li class="nav__item">
-                        <a href="#contact" class="nav__link" data-tooltip="Contacto">
-                            <i class='bx bx-message-square-detail'></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+    <a href="#about" class="scroll__hint" aria-label="Ir a la seccion Sobre mi">
+        <div class="scroll__mouse"><div class="scroll__dot"></div></div>
+        <span>Desliza</span>
+    </a>
+</section>
 
-            <i class='bx bx-moon change-theme' id="theme-button" data-tooltip="Cambiar tema"></i>
-        </nav>
-    </header>
+<!-- ===================== ABOUT ===================== -->
+<section class="about section" id="about">
+    <div class="section__hd">
+        <span class="section__tag">// 01</span>
+        <h2 class="section__title">Sobre Mi</h2>
+        <div class="section__line"></div>
+    </div>
 
-    <!-- Main -->
-    <main class="main">
-        <!-- Home -->
-        <section class="home section" id="home">
-            <div class="home__container container grid">
-                <div class="home__data">
-                    <span class="home__greeting">
-                        <span class="greeting-bracket">&lt;</span>
-                        Hola, soy
-                        <span class="greeting-bracket">/&gt;</span>
-                    </span>
-                    <h1 class="home__name">Alvaro Aldama</h1>
-                    <h3 class="home__education">
-                        Ingeniero en Sistemas & <span class="typewriter-text"></span>
-                    </h3>
-                    
-                    <div class="home__buttons">
-                        <a download="" href="assets/pdf/Alvaro_Aldama_Ingeniero_Sistemas.pdf" class="button button--ghost">
-                            <i class='bx bx-download'></i> Descargar CV
-                        </a>
-                        <a href="#contact" class="button">
-                            <i class='bx bx-send'></i> Contáctame
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="home__handle">
-                    <div class="home__img-wrapper">
-                        <img src="assets/img/perfil.jpeg" alt="Álvaro Aldama" class="home__img">
-                        <div class="home__img-border"></div>
-                    </div>
-                </div>
-
-                <div class="home__social">
-                    <a href="https://github.com/Alvaro6ix" target="_blank" class="home__social-link" data-tooltip="GitHub">
-                        <i class='bx bxl-github'></i>
-                    </a>
-                    <a href="https://wa.me/527227453989" target="_blank" class="home__social-link" data-tooltip="WhatsApp">
-                        <i class='bx bxl-whatsapp'></i>
-                    </a>
-                    <a href="mailto:alvaro69aldama@gmail.com" class="home__social-link" data-tooltip="Email">
-                        <i class='bx bx-envelope'></i>
-                    </a>
-                </div>
-
-                <a href="#about" class="home__scroll">
-                    <i class='bx bx-mouse home__scroll-icon'></i>
-                    <span class="home__scroll-name">Desliza</span>
-                </a>
-            </div>
-
-            <!-- Geometric Background -->
-            <div class="geometric-bg">
-                <div class="geometric-shape"></div>
-                <div class="geometric-shape"></div>
-                <div class="geometric-shape"></div>
-            </div>
-        </section>
-
-        <!-- About -->
-        <section class="about section" id="about">
-            <span class="section__subtitle">// Introducción</span>
-            <h2 class="section__title">Sobre Mí</h2>
-
-            <div class="about__container container grid">
-                <div class="about__img-wrapper">
-                    <img src="assets/img/about.jpeg" alt="Álvaro Aldama" class="about__img">
-                    <div class="about__img-overlay"></div>
-                </div>
-
-                <div class="about__data">
-                    <div class="about__info">
-                        <div class="about__box">
-                            <i class='bx bx-award about__icon'></i>
-                            <h3 class="about__title">Experiencia</h3>
-                            <span class="about__subtitle">2 Años</span>
-                        </div>
-                        <div class="about__box">
-                            <i class='bx bx-code-block about__icon'></i>
-                            <h3 class="about__title">Proyectos</h3>
-                            <span class="about__subtitle">7+ Completados</span>
-                        </div>
-                        <div class="about__box">
-                            <i class='bx bx-support about__icon'></i>
-                            <h3 class="about__title">Soporte</h3>
-                            <span class="about__subtitle">Especializado TI</span>
-                        </div>
-                    </div>
-
-                    <p class="about__description">
-                        Hola, soy Alvaro tengo 22 años, Ingeniero en Sistemas con historial comprobado en el desarrollo de 
-                        <strong>aplicaciones Full Stack escalables</strong> y PWAs. Experto en optimizar operaciones 
-                        técnicas mediante <strong>IA y automatización</strong>. Mi enfoque combina la ingeniería de 
-                        software con soluciones innovadoras de Inteligencia Artificial.
-                    </p>
-
-                    <a href="#contact" class="button">
-                        <i class='bx bx-message-dots'></i> Hablemos
-                    </a>
+    <div class="about__container container">
+        <div class="about__media">
+            <div class="about__img-frame" id="about-tilt">
+                <img src="assets/img/about.jpeg" alt="Alvaro Aldama" class="about__img" loading="lazy">
+                <div class="img-deco img-deco--tl"></div>
+                <div class="img-deco img-deco--br"></div>
+                <div class="about__code-card">
+<pre><code><span class="c-kw">const</span> <span class="c-var">alvaro</span> = {
+  <span class="c-prop">rol</span>: <span class="c-str">"Full Stack Dev"</span>,
+  <span class="c-prop">edad</span>: <span class="c-num">22</span>,
+  <span class="c-prop">ciudad</span>: <span class="c-str">"Toluca, MX"</span>,
+  <span class="c-prop">open</span>: <span class="c-bool">true</span>
+};</code></pre>
                 </div>
             </div>
-        </section>
-
-        <!-- Experience -->
-        <section class="experience section" id="experience">
-            <span class="section__subtitle">// Mi recorrido profesional</span>
-            <h2 class="section__title">Trayectoria Laboral</h2>
-
-            <div class="experience__container container">
-                <div class="timeline">
-                    <!-- BGITAL -->
-                    <div class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="experience__header">
-                                <i class='bx bx-briefcase-alt-2 experience__icon'></i>
-                                <div>
-                                    <h3 class="experience__title">Desarrollador Full Stack & Soporte TI</h3>
-                                    <span class="experience__subtitle">BGITAL (Telecomunicaciones)</span>
-                                    <span class="experience__date">
-                                        <i class='bx bx-calendar'></i> Nov 2025 - Presente
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="experience__description">
-                                <ul>
-                                    <li><i class='bx bx-check'></i> Desarrollo de PWA tickets multi-empresa, con chat en tiempo real, notificaciones telegram y gestión de roles, logrando 100% de adopción y 80% de mejora en tiempos de respuesta</li>
-                                    <li><i class='bx bx-check'></i> Desarrollo de PWA interna para gestión de actividades del equipo </li>
-                                    <li><i class='bx bx-check'></i> Creé prototipo ERP para ISP en 3 semanas con workflow completo, geolocalización, Contratos, Inventario, generación de PDFs y dashboards</li>
-                                    <li><i class='bx bx-check'></i> Creacion de diagramas de Flujo, ERD, Gantt, Secuencia, UML</li>
-                                    <li><i class='bx bx-check'></i> Automatizaciones con Python para migración masiva de 50,000+ registros CSV a SQL, reduciendo errores manuales en 95%</li>
-                                    <li><i class='bx bx-check'></i> Soporte técnico  a clientes empresariales</li>
-                                    <li><i class='bx bx-check'></i> Control y configuracion de Correos, Hosting, DNS</li>
-
-                                </ul>
-                            </div>
-                            <div class="experience__tech">
-                                <span class="tech-tag">Laravel</span>
-                                <span class="tech-tag">Canva</span>
-                                <span class="tech-tag">React</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">Firebase</span>
-                                <span class="tech-tag">Pyhton</span>
-                                <span class="tech-tag">IA</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tesorería Toluca -->
-                    <div class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="experience__header">
-                                <i class='bx bx-buildings experience__icon'></i>
-                                <div>
-                                    <h3 class="experience__title">Ingeniero en Sistemas</h3>
-                                    <span class="experience__subtitle">Instituto de la defensoria publica IDP (Servicio Social)</span>
-                                    <span class="experience__date">
-                                        <i class='bx bx-calendar'></i> Ene 2025 - junio 2025
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="experience__description">
-                                <ul>
-                                    <li><i class='bx bx-check'></i> Sistema de inventario gubernamental con generación de QR</li>
-                                    <li><i class='bx bx-check'></i> Diseño de publicaciones para post de facebook</li>
-                                    <li><i class='bx bx-check'></i> Soporte técnico a +50 usuarios </li>
-                                    <li><i class='bx bx-check'></i> Colaboracion en proyecto GitHub de defensores publicos y reclusos</li>
-                                </ul>
-                            </div>
-                            <div class="experience__tech">
-                                <span class="tech-tag">Laravel</span>
-                                <span class="tech-tag">PHP</span>
-                                <span class="tech-tag">MySQL</span>
-                                <span class="tech-tag">Canva</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Freelance -->
-                    <div class="timeline__item">
-                        <div class="timeline__marker"></div>
-                        <div class="timeline__content">
-                            <div class="experience__header">
-                                <i class='bx bx-code-alt experience__icon'></i>
-                                <div>
-                                    <h3 class="experience__title">Desarrollador Freelance </h3>
-                                    <span class="experience__subtitle">Proyectos independientes</span>
-                                    <span class="experience__date">
-                                        <i class='bx bx-calendar'></i> 2022 - Presente
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="experience__description">
-                                <ul>
-                                    <li><i class='bx bx-check'></i> Desarrollo de paginas web personalizadas para PYMEs</li>
-                                    <li><i class='bx bx-check'></i> Automatización con Python y herramientas de IA</li>
-                                    <li><i class='bx bx-check'></i> Soporte y mantenimiento a domicilio</li>
-                                    <li><i class='bx bx-check'></i> Desarrollo de apps web</li>
-                                </ul>
-                            </div>
-                            <div class="experience__tech">
-                                <span class="tech-tag">Python</span>
-                                <span class="tech-tag">Soporte</span>
-                                <span class="tech-tag">Web</span>
-                                <span class="tech-tag">IA</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Skills -->
-        <section class="skills section" id="skills">
-            <span class="section__subtitle">// Stack Tecnológico</span>
-            <h2 class="section__title">Habilidades</h2>
-
-            <div class="skills__container container grid">
-                <!-- Backend -->
-                <div class="skills__content">
-                    <div class="skills__header">
-                        <i class='bx bx-server skills__icon'></i>
-                        <h3 class="skills__title">Backend Development</h3>
-                    </div>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxl-php'></i>
-                                <div>
-                                    <h3 class="skills__name">PHP & Laravel</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-python'></i>
-                                <div>
-                                    <h3 class="skills__name">Python & Django</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-firebase'></i>
-                                <div>
-                                    <h3 class="skills__name">Firebase</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bx-data'></i>
-                                <div>
-                                    <h3 class="skills__name">MySQL & PostgreSQL</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bx-network-chart'></i>
-                                <div>
-                                    <h3 class="skills__name">REST APIs</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-git'></i>
-                                <div>
-                                    <h3 class="skills__name">Git & GitHub</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Frontend -->
-                <div class="skills__content">
-                    <div class="skills__header">
-                        <i class='bx bx-code-curly skills__icon'></i>
-                        <h3 class="skills__title">Frontend Development</h3>
-                    </div>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxl-react'></i>
-                                <div>
-                                    <h3 class="skills__name">React</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-javascript'></i>
-                                <div>
-                                    <h3 class="skills__name">JavaScript </h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-html5'></i>
-                                <div>
-                                    <h3 class="skills__name">HTML5 & CSS3</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxl-tailwind-css'></i>
-                                <div>
-                                    <h3 class="skills__name">Tailwind CSS</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-bootstrap'></i>
-                                <div>
-                                    <h3 class="skills__name">Bootstrap</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bx-mobile-alt'></i>
-                                <div>
-                                    <h3 class="skills__name">Responsive Design</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Tools & IA -->
-                <div class="skills__content">
-                    <div class="skills__header">
-                        <i class='bx bx-brain skills__icon'></i>
-                        <h3 class="skills__title">IA & Herramientas</h3>
-                    </div>
-                    <div class="skills__box">
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bx-bot'></i>
-                                <div>
-                                    <h3 class="skills__name">Claude & Gemini</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bx-cloud'></i>
-                                <div>
-                                    <h3 class="skills__name">Google Cloud</h3>
-                                    <span class="skills__level">Intermedio</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bxl-docker'></i>
-                                <div>
-                                    <h3 class="skills__name">Docker</h3>
-                                    <span class="skills__level">Básico</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="skills__group">
-                            <div class="skills__data">
-                                <i class='bx bxl-visual-studio'></i>
-                                <div>
-                                    <h3 class="skills__name">VS Code</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bx-slideshow'></i>
-                                <div>
-                                    <h3 class="skills__name">Gamma</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                            <div class="skills__data">
-                                <i class='bx bx-chip'></i>
-                                <div>
-                                    <h3 class="skills__name">Prompt Engineering</h3>
-                                    <span class="skills__level">Avanzado</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Projects -->
-        <section class="work section" id="work">
-            <span class="section__subtitle">// Portafolio</span>
-            <h2 class="section__title">Proyectos Destacados</h2>
-
-            <div class="work__filters">
-                <span class="work__item active-work" data-filter="all">
-                    <i class='bx bx-grid-alt'></i> Todos
-                </span>
-                <span class="work__item" data-filter=".web">
-                    <i class='bx bx-desktop'></i> Web
-                </span>
-                <span class="work__item" data-filter=".mobile">
-                    <i class='bx bx-mobile'></i> Móvil
-                </span>
-                <span class="work__item" data-filter=".automation">
-                    <i class='bx bx-bot'></i> IA/Automatización
-                </span>
-            </div>
-
-            <div class="work__container container grid">
-                <!-- App Soporte BGITAL -->
-                <div class="work__card mix mobile web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/soportebgital.png" alt="App Soporte BGITAL" class="work__img">
-                        <div class="work__overlay">
-                            <span class="work__tag">Destacado</span>
-                        </div>
-                    </div>
-                    <h3 class="work__title">App Soporte BGITAL</h3>
-                    <p class="work__description">
-                        PWA completa para gestión de órdenes de servicio técnico en campo. Incluye 
-                        geolocalización, modo offline, notificaciones push y dashboard en tiempo real.
-                    </p>
-                    <div class="work__tech">
-                        <span>Firebase</span>
-                        <span>React</span>
-                        <span>PWA</span>
-                        <span>Api Telegram</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="#" class="work__button">
-                            <i class='bx bx-link-external'></i> Proyecto privado
-                        </a>
-                    </div>
-                </div>
-                 <!-- wacha eri -->
-                 <div class="work__card mix mobile web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/WachaERI.png" alt="App Soporte BGITAL" class="work__img"> 
-                    </div>
-                    <h3 class="work__title">Wacha Eri</h3>
-                    <p class="work__description">
-                        Pagina web con menu de negocio de venta de Snacks con botones funcionales, redes, ubicacion con maps y numero de telefono + menu fisico.
-                    </p>
-                    <div class="work__tech">
-                        <span>HTML</span>
-                        <span>JS</span>
-                        <span>CSS</span>
-                        <span>Canva</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="https://wacha-eri.netlify.app/" class="work__button">
-                            <i class='bx bx-link-external'></i> Ver demo
-                        </a>
-                    </div>
-                </div>
-                 <!-- StreamAdmin -->
-                 <div class="work__card mix mobile web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/Streamadmin.png" alt="App Soporte BGITAL" class="work__img"> 
-                    </div>
-                    <h3 class="work__title">Stream Admin</h3>
-                    <p class="work__description">
-                        PWA para vendedores de plataformas de streaming multi-usuario, dashboard, alertas de clientes, renovaciones, ingreso, reembolsos, catalogo, perifles ocupados, migraciones, metodos de pago.
-                    </p>
-                    <div class="work__tech">
-                        <span>React</span>
-                        <span>Laravel</span>
-                        <span>MySQL</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="https://streamadmin.com.mx" class="work__button">
-                            <i class='bx bx-link-external'></i> Ver demo
-                        </a>
-                    </div>
-                </div>
-                <!-- Inventario IDP -->
-                <div class="work__card mix web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/inventarioIDP.png" alt="Inventario IDP" class="work__img">
-                    </div>
-                    <h3 class="work__title">Sistema Inventario IDP</h3>
-                    <p class="work__description">
-                        Sistema de gestión de activos gubernamental con generación de códigos QR, 
-                        reportes PDF/Excel y control de resguardos. Interfaz intuitiva y responsive.
-                    </p>
-                    <div class="work__tech">
-                        <span>Laravel</span>
-                        <span>Tailwind</span>
-                        <span>MySQL</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="#" class="work__button">
-                            <i class='bx bx-link-external'></i> Proyecto privado
-                        </a>
-                    </div>
-                </div>
-
-                <!-- E-commerce -->
-                <div class="work__card mix web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/huayra.png" alt="E-commerce" class="work__img">
-                    </div>
-                    <h3 class="work__title">E-commerce Huayra Mx</h3>
-                    <p class="work__description">
-                        Tienda para joyeria por secciones de catalogo, modo oscuro/claro integracion con Mercado Pago y pedidos por via WhatsApp
-                    </p>
-                    <div class="work__tech">
-                        <span>HTML</span>
-                        <span>CSS</span>
-                        <span>JS</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="https://huayramx.vercel.app/" class="work__button">
-                            <i class='bx bx-link-external'></i> Ver Demo
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Bot Scraping -->
-                <div class="work__card mix automation">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/tesis.png" alt="Bot Scraping" class="work__img">
-                        <div class="work__overlay">
-                            <span class="work__tag">Tesis</span>
-                        </div>
-                    </div>
-                    <h3 class="work__title">STMU-IA</h3>
-                    <p class="work__description">
-                        Sistema para clasificacion de Residuos reciclables con IA y arduino, panel de control, graficas, generacion de CVS, modo oscuro y claro, Idiomas, brazo robotico con arduino y camara web.
-                    </p>
-                    <div class="work__tech">
-                        <span>Python</span>
-                        <span>YoloV5</span>
-                        <span>PyTorch</span>
-                        <span>Arduino</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="#" class="work__button">
-                            <i class='bx bx-link-external'></i> Privado
-                        </a>
-                    </div>
-                </div>
-
-                <!-- Dashboard Analytics -->
-                <div class="work__card mix web">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/tareas.png" alt="Dashboard" class="work__img">
-                    </div>
-                    <h3 class="work__title">Work Flow Bgital</h3>
-                    <p class="work__description">
-                        Gestion de tareas por equipos, individuales, fechas limites de entrega, notificaciones, adjuntar evidencia, notas
-                    </p>
-                    <div class="work__tech">
-                        <span>React</span>
-                        <span>Chart.js</span>
-                        <span>Laravel</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="#" class="work__button">
-                            <i class='bx bx-link-external'></i> Proyecto privado
-                        </a>
-                    </div>
-                </div>
-
-                <!--  IA -->
-                <div class="work__card mix automation">
-                    <div class="work__img-wrapper">
-                        <img src="assets/img/finflow.png" alt="Chatbot" class="work__img">
-                        <div class="work__overlay">
-                            <span class="work__tag">IA</span>
-                        </div>
-                    </div>
-                    <h3 class="work__title">Fin Flow </h3>
-                    <p class="work__description">
-                        PWA para gestión financiera personal con IA y analisis psicologico, dashboard con control de gastos por dia,mes fijos, score automatico con ingresos, analisis general, psicologico, predictivo, pagos meses, subscripciones, limites, metas, gastos, ubicacion, tickets e ingresos con 50/30/20.
-                    </p>
-                    <div class="work__tech">
-                        <span>React</span>
-                        <span>Firebase</span>
-                        <span>Autentication</span>
-                        <span>Fire Store</span>
-                    </div>
-                    <div class="work__buttons">
-                        <a href="https://finflow-code69.web.app" class="work__button">
-                            <i class='bx bx-link-external'></i> Ver Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Certificates -->
-        <section class="certificates section" id="certificates">
-    <span class="section__subtitle">// Formación Continua</span>
-    <h2 class="section__title">Certificaciones</h2>
-
-    <div class="certificates__container container grid">
-        
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-brain'></i>
-            </div>
-            <h3 class="certificate__title">Fundamentos de IA</h3>
-            <span class="certificate__source">Cisco Networking Academy</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Conceptos fundamentales de Inteligencia Artificial, ética y aplicaciones modernas.
-            </p>
-            <a href="assets/pdf/certificado Fundamentos de IA con IBM SkillsBuild.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
         </div>
 
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bxl-google-cloud'></i>
+        <div class="about__content">
+            <div class="about__stats-row">
+                <div class="astat" data-tilt>
+                    <i class='bx bx-award'></i>
+                    <strong class="astat__num" data-count="2">0</strong>
+                    <span>Anos Exp.</span>
+                </div>
+                <div class="astat" data-tilt>
+                    <i class='bx bx-code-block'></i>
+                    <strong class="astat__num" data-count="7">0</strong>
+                    <span>Proyectos +</span>
+                </div>
+                <div class="astat" data-tilt>
+                    <i class='bx bxs-certification'></i>
+                    <strong class="astat__num" data-count="11">0</strong>
+                    <span>Certif.</span>
+                </div>
             </div>
-            <h3 class="certificate__title">Prompt Design Vertex AI</h3>
-            <span class="certificate__source">Google Cloud</span>
-            <span class="certificate__date">2024</span>
-            <p class="certificate__description">
-                Diseño de prompts efectivos y uso de modelos generativos en la plataforma Vertex AI.
+            <p class="about__text">
+                Soy Alvaro, tengo 22 anos, <strong>Ingeniero en Sistemas</strong> con historial comprobado 
+                en el desarrollo de <strong>aplicaciones Full Stack escalables</strong> y PWAs. 
+                Experto en optimizar operaciones tecnicas mediante <strong>IA y automatizacion</strong>. 
+                Combino ingenieria de software con soluciones innovadoras de Inteligencia Artificial.
             </p>
-            <a href="https://www.credly.com/badges/f4b41fa2-b20b-4f5b-ad18-2eb1f546af25/public_url" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
+            <div class="about__pills">
+                <span class="pill"><i class='bx bx-map-pin'></i> Toluca, Mexico</span>
+                <span class="pill"><i class='bx bx-graduation'></i> Ing. Sistemas</span>
+                <span class="pill"><i class='bx bx-code-alt'></i> Full Stack</span>
+                <span class="pill"><i class='bx bx-bot'></i> IA Enthusiast</span>
+            </div>
+            <a href="#contact" class="btn btn--solid mag-btn"><span class="btn__inner"><i class='bx bx-message-dots'></i> Hablemos</span></a>
         </div>
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-bot'></i>
+    </div>
+</section>
+
+<!-- ===================== EXPERIENCE ===================== -->
+<section class="experience section" id="experience">
+    <div class="section__hd">
+        <span class="section__tag">// 02</span>
+        <h2 class="section__title">Experiencia</h2>
+        <div class="section__line"></div>
+    </div>
+
+    <div class="experience__container container">
+        <div class="timeline">
+
+            <div class="tl__item">
+                <div class="tl__connector"></div>
+                <div class="tl__dot"><div class="tl__dot-core"></div></div>
+                <div class="tl__card" data-tilt data-tilt-max="4" data-tilt-speed="400">
+                    <div class="tl__card-glow"></div>
+                    <div class="tl__header">
+                        <div class="tl__icon-wrap"><i class='bx bx-briefcase-alt-2'></i></div>
+                        <div>
+                            <h3>Desarrollador Full Stack & Soporte TI</h3>
+                            <span class="tl__company">BGITAL <em>(Telecomunicaciones)</em></span>
+                            <span class="tl__date"><i class='bx bx-calendar'></i> Nov 2025 - Presente</span>
+                        </div>
+                        <span class="tl__badge">Actual</span>
+                    </div>
+                    <ul class="tl__points">
+                        <li>PWA de tickets multi-empresa con chat en tiempo real, notificaciones Telegram y gestion de roles — <strong>100% adopcion, 80% mejora en tiempos</strong></li>
+                        <li>Prototipo ERP para ISP en 3 semanas: geolocalización, Contratos, Inventario, PDFs y dashboards</li>
+                        <li>Automatizaciones Python para migracion masiva de <strong>50,000+ registros CSV → SQL</strong>, reduciendo errores en 95%</li>
+                        <li>Soporte tecnico empresarial, control de Correos, Hosting y DNS</li>
+                    </ul>
+                    <div class="tl__techs">
+                        <span>Laravel</span><span>React</span><span>MySQL</span><span>Firebase</span><span>Python</span><span>IA</span>
+                    </div>
+                </div>
             </div>
-            <h3 class="certificate__title">Bases clave de IA</h3>
-            <span class="certificate__source">Pottencia</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Entrenamiento de modelos predictivos, algoritmos de clasificación y regresión.
-            </p>
-            <a href="assets/pdf/bases y conceptos potencia.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
+
+            <div class="tl__item">
+                <div class="tl__connector"></div>
+                <div class="tl__dot"><div class="tl__dot-core"></div></div>
+                <div class="tl__card" data-tilt data-tilt-max="4" data-tilt-speed="400">
+                    <div class="tl__card-glow"></div>
+                    <div class="tl__header">
+                        <div class="tl__icon-wrap"><i class='bx bx-buildings'></i></div>
+                        <div>
+                            <h3>Ingeniero en Sistemas</h3>
+                            <span class="tl__company">Instituto de la Defensoria Publica IDP <em>(Servicio Social)</em></span>
+                            <span class="tl__date"><i class='bx bx-calendar'></i> Ene 2025 - Jun 2025</span>
+                        </div>
+                    </div>
+                    <ul class="tl__points">
+                        <li>Sistema de inventario gubernamental con generacion de QR</li>
+                        <li>Diseno de publicaciones para redes sociales institucionales</li>
+                        <li>Soporte tecnico a <strong>+50 usuarios</strong></li>
+                        <li>Colaboracion en proyecto GitHub de defensores publicos y reclusos</li>
+                    </ul>
+                    <div class="tl__techs">
+                        <span>Laravel</span><span>PHP</span><span>MySQL</span><span>Canva</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tl__item">
+                <div class="tl__dot"><div class="tl__dot-core"></div></div>
+                <div class="tl__card" data-tilt data-tilt-max="4" data-tilt-speed="400">
+                    <div class="tl__card-glow"></div>
+                    <div class="tl__header">
+                        <div class="tl__icon-wrap"><i class='bx bx-code-alt'></i></div>
+                        <div>
+                            <h3>Desarrollador Freelance</h3>
+                            <span class="tl__company">Proyectos Independientes</span>
+                            <span class="tl__date"><i class='bx bx-calendar'></i> 2022 - Presente</span>
+                        </div>
+                    </div>
+                    <ul class="tl__points">
+                        <li>Paginas web personalizadas para PYMEs y emprendedores</li>
+                        <li>Automatizacion con Python y herramientas de IA</li>
+                        <li>Soporte y mantenimiento a domicilio</li>
+                        <li>Desarrollo de apps web escalables y progresivas</li>
+                    </ul>
+                    <div class="tl__techs">
+                        <span>Python</span><span>Web</span><span>IA</span><span>Soporte</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-server'></i>
+    </div>
+</section>
+
+<!-- ===================== SKILLS ===================== -->
+<section class="skills section" id="skills">
+    <div class="section__hd">
+        <span class="section__tag">// 03</span>
+        <h2 class="section__title">Habilidades</h2>
+        <div class="section__line"></div>
+    </div>
+
+    <div class="skills__container container">
+
+        <div class="skill-card" data-tilt data-tilt-max="8" data-tilt-speed="400">
+            <div class="skill-card__glow"></div>
+            <div class="skill-card__hd">
+                <div class="skill-card__icon"><i class='bx bx-server'></i></div>
+                <h3>Backend</h3>
             </div>
-            <h3 class="certificate__title">Network Basic</h3>
-            <span class="certificate__source">Cisco</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Fundamentos de redes, protocolos de comunicación y configuración de dispositivos.
-            </p>
-            <a href="assets/pdf/NetworkingBasicsUpdate20250318-25-5peh38.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
+            <div class="skill-bars">
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-php'></i><span>PHP & Laravel</span><span class="sbar__pct">70%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="70"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-python'></i><span>Python</span><span class="sbar__pct">75%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="75"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-firebase'></i><span>Firebase</span><span class="sbar__pct">85%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="85"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bx-data'></i><span>MySQL / PostgreSQL</span><span class="sbar__pct">80%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="80"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bx-network-chart'></i><span>REST APIs</span><span class="sbar__pct">75%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="75"></div></div></div>
+            </div>
         </div>
 
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-shield-quarter'></i>
+        <div class="skill-card" data-tilt data-tilt-max="8" data-tilt-speed="400">
+            <div class="skill-card__glow"></div>
+            <div class="skill-card__hd">
+                <div class="skill-card__icon"><i class='bx bx-code-curly'></i></div>
+                <h3>Frontend</h3>
             </div>
-            <h3 class="certificate__title">Protección de Software y IA</h3>
-            <span class="certificate__source">Santander X</span>
-            <span class="certificate__date">2024</span>
-            <p class="certificate__description">
-                Seguridad en el desarrollo de software y mitigación de riesgos en sistemas de IA.
-            </p>
-            <a href="assets/pdf/Certificado Software-IA.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
+            <div class="skill-bars">
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-react'></i><span>React</span><span class="sbar__pct">75%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="75"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-javascript'></i><span>JavaScript</span><span class="sbar__pct">85%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="85"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-html5'></i><span>HTML5 & CSS3</span><span class="sbar__pct">90%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="90"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-tailwind-css'></i><span>Tailwind / Bootstrap</span><span class="sbar__pct">90%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="90"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bx-mobile-alt'></i><span>Responsive / PWA</span><span class="sbar__pct">90%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="90"></div></div></div>
+            </div>
         </div>
 
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-bar-chart-alt-2'></i>
+        <div class="skill-card" data-tilt data-tilt-max="8" data-tilt-speed="400">
+            <div class="skill-card__glow"></div>
+            <div class="skill-card__hd">
+                <div class="skill-card__icon"><i class='bx bx-brain'></i></div>
+                <h3>IA & Herramientas</h3>
             </div>
-            <h3 class="certificate__title">Introducción a Data Science</h3>
-            <span class="certificate__source">Cisco Networking Academy</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Análisis de grandes volúmenes de datos y visualización para la toma de decisiones.
-            </p>
-            <a href="assets/pdf/certificado ciencia de datos.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
-        </div>
-
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-data'></i>
+            <div class="skill-bars">
+                <div class="sbar"><div class="sbar__top"><i class='bx bx-bot'></i><span>Claude & Gemini</span><span class="sbar__pct">90%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="90"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bx-chip'></i><span>Prompt Engineering</span><span class="sbar__pct">90%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="90"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-git'></i><span>Git & GitHub</span><span class="sbar__pct">70%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="70"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-google-cloud'></i><span>Google Cloud</span><span class="sbar__pct">60%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="60"></div></div></div>
+                <div class="sbar"><div class="sbar__top"><i class='bx bxl-docker'></i><span>Docker</span><span class="sbar__pct">50%</span></div><div class="sbar__track"><div class="sbar__fill" data-w="50"></div></div></div>
             </div>
-            <h3 class="certificate__title">Database Foundations</h3>
-            <span class="certificate__source">Oracle Academy</span>
-            <span class="certificate__date">2024</span>
-            <p class="certificate__description">
-                Diseño de bases de datos relacionales, lenguaje SQL y administración de datos.
-            </p>
-            <a href="assets/pdf/Alvaro Aldama certificado oracle.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
-        </div>
-
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-cloud'></i>
-            </div>
-            <h3 class="certificate__title">Fundamentos de IA</h3>
-            <span class="certificate__source">IBM SkillsBuild</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Introducción al Machine Learning, Deep Learning y el ecosistema de IA de IBM.
-            </p>
-            <a href="assets/pdf/IBMDesign20250311-28-3jm8vm.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
-        </div>
-
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bxl-python'></i>
-            </div>
-            <h3 class="certificate__title">Python Programming</h3>
-            <span class="certificate__source">Santander Academy</span>
-            <span class="certificate__date">2024</span>
-            <p class="certificate__description">
-                Desarrollo de scripts y aplicaciones utilizando las mejores prácticas de Python.
-            </p>
-            <a href="assets/pdf/Certificado_Phyton.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
-        </div>
-
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bxl-python'></i>
-            </div>
-            <h3 class="certificate__title">Python Essentials</h3>
-            <span class="certificate__source">Cisco Networking Academy</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Programación avanzada en Python, manejo de datos y estructuras lógicas.
-            </p>
-            <a href="assets/pdf/certificado fundamentos phyton.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
-        </div>
-
-        <div class="certificate__card">
-            <div class="certificate__icon">
-                <i class='bx bx-chip'></i>
-            </div>
-            <h3 class="certificate__title">Machine Learning</h3>
-            <span class="certificate__source">Pottencia</span>
-            <span class="certificate__date">2025</span>
-            <p class="certificate__description">
-                Entrenamiento de modelos predictivos, algoritmos de clasificación y regresión.
-            </p>
-            <a href="assets/pdf/Fundamentos Machine Learning.pdf" class="certificate__button">
-                <i class='bx bx-show'></i> Ver Credencial
-            </a>
         </div>
 
     </div>
 </section>
 
-        <!-- Contact -->
-        <section class="contact section" id="contact">
-            <span class="section__subtitle">// ¿Tienes un proyecto en mente?</span>
-            <h2 class="section__title">Contáctame</h2>
+<!-- ===================== PROJECTS ===================== -->
+<section class="work section" id="work">
+    <div class="section__hd">
+        <span class="section__tag">// 04</span>
+        <h2 class="section__title">Proyectos</h2>
+        <div class="section__line"></div>
+    </div>
 
-            <div class="contact__container container grid">
-                <div class="contact__content">
-                    <h3 class="contact__title">
-                        <i class='bx bx-message-dots'></i> Medios de contacto
-                    </h3>
+    <div class="work__filters container">
+        <button class="filter-btn active-filter" data-filter="all"><i class='bx bx-grid-alt'></i> Todos</button>
+        <button class="filter-btn" data-filter=".web"><i class='bx bx-desktop'></i> Web</button>
+        <button class="filter-btn" data-filter=".mobile"><i class='bx bx-mobile'></i> Movil</button>
+        <button class="filter-btn" data-filter=".automation"><i class='bx bx-bot'></i> IA / Auto</button>
+    </div>
 
-                    <div class="contact__info">
-                        <div class="contact__card">
-                            <i class='bx bx-envelope contact__card-icon'></i>
-                            <h3 class="contact__card-title">Correo</h3>
-                            <span class="contact__card-data">alvaro69aldama@gmail.com</span>
-                            <a href="mailto:alvaro69aldama@gmail.com" class="contact__button">
-                                Enviar correo <i class='bx bx-right-arrow-alt contact__button-icon'></i>
-                            </a>
-                        </div>
+    <div class="work__grid container" id="work-grid">
 
-                        <div class="contact__card">
-                            <i class='bx bxl-whatsapp contact__card-icon'></i>
-                            <h3 class="contact__card-title">WhatsApp</h3>
-                            <span class="contact__card-data">+52 722 745 3989</span>
-                            <a href="https://wa.me/527227453989" target="_blank" class="contact__button">
-                                Enviar mensaje <i class='bx bx-right-arrow-alt contact__button-icon'></i>
-                            </a>
-                        </div>
-
-                        <div class="contact__card">
-                            <i class='bx bxl-github contact__card-icon'></i>
-                            <h3 class="contact__card-title">GitHub</h3>
-                            <span class="contact__card-data">@Alvaro6ix</span>
-                            <a href="https://github.com/Alvaro6ix" target="_blank" class="contact__button">
-                                Ver proyectos <i class='bx bx-right-arrow-alt contact__button-icon'></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="contact__content">
-                    <h3 class="contact__title">
-                        <i class='bx bx-edit'></i> Escríbeme directamente
-                    </h3>
-                    <form action="" class="contact__form" id="contact-form">
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">Nombre completo</label>
-                            <input type="text" name="name" placeholder="Tu nombre" class="contact__form-input" required>
-                        </div>
-                        <div class="contact__form-div">
-                            <label class="contact__form-tag">Correo electrónico</label>
-                            <input type="email" name="email" placeholder="tu@gmail.com" class="contact__form-input" required>
-                        </div>
-                        <div class="contact__form-div contact__form-area">
-                            <label class="contact__form-tag">Mensaje</label>
-                            <textarea name="message" cols="30" rows="10" placeholder="Describe tu proyecto o consulta..." class="contact__form-input" required></textarea>
-                        </div>
-                        <button type="submit" class="button">
-                            <i class='bx bx-send'></i> Enviar Mensaje
-                        </button>
-                        <p class="contact__message" id="contact-message"></p>
-                    </form>
-                </div>
+        <article class="work__card mix mobile web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/soportebgital.png" alt="App Soporte BGITAL" loading="lazy">
+                <div class="work__badge">Destacado</div>
             </div>
-        </section>
-    </main>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">PWA</span><span class="work__lock"><i class='bx bx-lock-alt'></i> Privado</span></div>
+                <h3>App Soporte BGITAL</h3>
+                <p>PWA para gestion de ordenes de servicio tecnico en campo. Geolocalización, modo offline, notificaciones push y dashboard en tiempo real.</p>
+                <div class="work__techs"><span>Firebase</span><span>React</span><span>PWA</span><span>Telegram API</span></div>
+            </div>
+        </article>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="footer__container container">
-            <h1 class="footer__title">
-                <span class="logo-bracket">&lt;</span>Code69<span class="logo-bracket"> /&gt;</span>
-            </h1>
-            <span class="footer__subtitle">Full Stack</span>
+        <article class="work__card mix mobile web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/WachaERI.png" alt="Wacha Eri" loading="lazy">
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">Landing</span><a href="https://wacha-eri.netlify.app/" target="_blank" class="work__ext-link" aria-label="Ver demo"><i class='bx bx-link-external'></i> Ver demo</a></div>
+                <h3>Wacha Eri</h3>
+                <p>Pagina web con menu de negocio de Snacks, botones funcionales, redes, ubicacion con Maps y menu fisico.</p>
+                <div class="work__techs"><span>HTML</span><span>JS</span><span>CSS</span><span>Canva</span></div>
+            </div>
+        </article>
 
-            <ul class="footer__list">
-                <li><a href="#about" class="footer__link">Sobre mí</a></li>
-                <li><a href="#experience" class="footer__link">Experiencia</a></li>
-                <li><a href="#work" class="footer__link">Proyectos</a></li>
-                <li><a href="#certificates" class="footer__link">Certificaciones</a></li>
-            </ul>
+        <article class="work__card mix mobile web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/Streamadmin.png" alt="Stream Admin" loading="lazy">
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">PWA SaaS</span><a href="https://streamadmin.com.mx" target="_blank" class="work__ext-link" aria-label="Ver demo"><i class='bx bx-link-external'></i> Ver demo</a></div>
+                <h3>Stream Admin</h3>
+                <p>PWA para vendedores de streaming: dashboard, alertas, renovaciones, catalogos, perfiles y metodos de pago.</p>
+                <div class="work__techs"><span>React</span><span>Laravel</span><span>MySQL</span></div>
+            </div>
+        </article>
 
-            <ul class="footer__social">
-    <a href="https://github.com/Alvaro6ix" target="_blank" class="footer__social-link" data-tooltip="GitHub">
-        <i class='bx bxl-github'></i>
-    </a>
-    <a href="mailto:alvaro69aldama@gmail.com" class="footer__social-link" data-tooltip="Gmail">
-        <i class='bx bxl-gmail'></i>
-    </a>
-    <a href="https://wa.me/527227453989" target="_blank" class="footer__social-link" data-tooltip="WhatsApp">
-        <i class='bx bxl-whatsapp'></i>
-    </a>
-</ul>
-            <span class="footer__copy">
-                &#169; 2026 Alvaro Aldama. Todos los derechos reservados.
-            </span>
+        <article class="work__card mix web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/inventarioIDP.png" alt="Inventario IDP" loading="lazy">
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">Web App</span><span class="work__lock"><i class='bx bx-lock-alt'></i> Privado</span></div>
+                <h3>Sistema Inventario IDP</h3>
+                <p>Gestion de activos gubernamental con generacion de QR, reportes PDF/Excel y control de resguardos.</p>
+                <div class="work__techs"><span>Laravel</span><span>Tailwind</span><span>MySQL</span></div>
+            </div>
+        </article>
+
+        <article class="work__card mix web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/huayra.png" alt="E-commerce Huayra" loading="lazy">
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">E-commerce</span><a href="https://huayramx.vercel.app/" target="_blank" class="work__ext-link" aria-label="Ver demo"><i class='bx bx-link-external'></i> Ver demo</a></div>
+                <h3>E-commerce Huayra Mx</h3>
+                <p>Tienda de joyeria por secciones, modo oscuro/claro, integracion con Mercado Pago y WhatsApp.</p>
+                <div class="work__techs"><span>HTML</span><span>CSS</span><span>JS</span></div>
+            </div>
+        </article>
+
+        <article class="work__card mix automation" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/tesis.png" alt="STMU-IA" loading="lazy">
+                <div class="work__badge">Tesis</div>
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">IA + IoT</span><span class="work__lock"><i class='bx bx-lock-alt'></i> Privado</span></div>
+                <h3>STMU-IA</h3>
+                <p>Clasificacion de residuos reciclables con IA y Arduino. Panel de control, graficas, brazo robotico y camara web.</p>
+                <div class="work__techs"><span>Python</span><span>YoloV5</span><span>PyTorch</span><span>Arduino</span></div>
+            </div>
+        </article>
+
+        <article class="work__card mix web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/tareas.png" alt="WorkFlow BGITAL" loading="lazy">
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">Web App</span><span class="work__lock"><i class='bx bx-lock-alt'></i> Privado</span></div>
+                <h3>Work Flow BGITAL</h3>
+                <p>Gestion de tareas por equipos, fechas limites, notificaciones, evidencia adjunta y notas colaborativas.</p>
+                <div class="work__techs"><span>React</span><span>Chart.js</span><span>Laravel</span></div>
+            </div>
+        </article>
+
+        <article class="work__card mix automation" data-tilt data-tilt-max="6" data-tilt-speed="400">
+            <div class="work__card-glow"></div>
+            <div class="work__img-wrap">
+                <img src="assets/img/finflow.png" alt="Fin Flow" loading="lazy">
+                <div class="work__badge">IA</div>
+            </div>
+            <div class="work__body">
+                <div class="work__meta"><span class="work__type">PWA + IA</span><a href="https://finflow-code69.web.app" target="_blank" class="work__ext-link" aria-label="Ver demo"><i class='bx bx-link-external'></i> Ver demo</a></div>
+                <h3>Fin Flow</h3>
+                <p>PWA de gestion financiera con IA. Dashboard, analisis psicologico, predictivo y regla 50/30/20.</p>
+                <div class="work__techs"><span>React</span><span>Firebase</span><span>Auth</span><span>Firestore</span></div>
+            </div>
+        </article>
+
+    </div>
+</section>
+
+<!-- ===================== CERTIFICATES ===================== -->
+<section class="certificates section" id="certificates">
+    <div class="section__hd">
+        <span class="section__tag">// 05</span>
+        <h2 class="section__title">Certificaciones</h2>
+        <div class="section__line"></div>
+    </div>
+
+    <div class="certs__grid container">
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-brain'></i></div>
+            <h3>Fundamentos de IA</h3>
+            <span class="cert-card__src">Cisco Networking Academy</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Conceptos fundamentales de IA, etica y aplicaciones modernas.</p>
+            <a href="assets/pdf/certificado Fundamentos de IA con IBM SkillsBuild.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
         </div>
-    </footer>
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bxl-google'></i></div>
+            <h3>Domina la IA con Gemini</h3>
+            <span class="cert-card__src">Santander x Google</span>
+            <span class="cert-card__yr">2026</span>
+            <p>Modelos predictivos, algoritmos de clasificacion y regresion.</p>
+            <a href="assets/pdf/Domina la IA con Gemini.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bxl-google-cloud'></i></div>
+            <h3>Prompt Design Vertex AI</h3>
+            <span class="cert-card__src">Google Cloud</span>
+            <span class="cert-card__yr">2024</span>
+            <p>Diseno de prompts efectivos y modelos generativos en Vertex AI.</p>
+            <a href="https://www.credly.com/badges/f4b41fa2-b20b-4f5b-ad18-2eb1f546af25/public_url" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
 
-    <!-- Scroll to Top Button -->
-    <a href="#" class="scrolltop" id="scroll-top">
-        <i class='bx bx-up-arrow-alt scrolltop__icon'></i>
-    </a>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <!-- Main JS -->
-    <script src="main.js"></script>
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-bot'></i></div>
+            <h3>Bases clave de IA</h3>
+            <span class="cert-card__src">Pottencia</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Modelos predictivos, algoritmos de clasificacion y regresion.</p>
+            <a href="assets/pdf/bases y conceptos potencia.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-server'></i></div>
+            <h3>Network Basics</h3>
+            <span class="cert-card__src">Cisco</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Fundamentos de redes, protocolos y configuracion de dispositivos.</p>
+            <a href="assets/pdf/NetworkingBasicsUpdate20250318-25-5peh38.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-shield-quarter'></i></div>
+            <h3>Proteccion Software e IA</h3>
+            <span class="cert-card__src">Santander X</span>
+            <span class="cert-card__yr">2024</span>
+            <p>Seguridad en el desarrollo de software y mitigacion de riesgos en IA.</p>
+            <a href="assets/pdf/Certificado Software-IA.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-bar-chart-alt-2'></i></div>
+            <h3>Data Science</h3>
+            <span class="cert-card__src">Cisco Networking Academy</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Analisis de datos y visualizacion para la toma de decisiones.</p>
+            <a href="assets/pdf/certificado ciencia de datos.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-data'></i></div>
+            <h3>Database Foundations</h3>
+            <span class="cert-card__src">Oracle Academy</span>
+            <span class="cert-card__yr">2024</span>
+            <p>Diseno de bases de datos relacionales, SQL y administracion de datos.</p>
+            <a href="assets/pdf/Alvaro Aldama certificado oracle.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-cloud'></i></div>
+            <h3>Fundamentos de IA</h3>
+            <span class="cert-card__src">IBM SkillsBuild</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Machine Learning, Deep Learning y el ecosistema de IA de IBM.</p>
+            <a href="assets/pdf/IBMDesign20250311-28-3jm8vm.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bxl-python'></i></div>
+            <h3>Python Programming</h3>
+            <span class="cert-card__src">Santander Academy</span>
+            <span class="cert-card__yr">2024</span>
+            <p>Desarrollo de scripts y aplicaciones con las mejores practicas de Python.</p>
+            <a href="assets/pdf/Certificado_Phyton.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bxl-python'></i></div>
+            <h3>Python Essentials</h3>
+            <span class="cert-card__src">Cisco Networking Academy</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Programacion avanzada en Python, estructuras de datos y logica.</p>
+            <a href="assets/pdf/certificado fundamentos phyton.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+        <div class="cert-card" data-tilt data-tilt-max="6">
+            <div class="cert-card__glow"></div>
+            <div class="cert-card__icon"><i class='bx bx-chip'></i></div>
+            <h3>Machine Learning</h3>
+            <span class="cert-card__src">Pottencia</span>
+            <span class="cert-card__yr">2025</span>
+            <p>Entrenamiento de modelos predictivos, clasificacion y regresion.</p>
+            <a href="assets/pdf/Fundamentos Machine Learning.pdf" target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+        </div>
+
+    </div>
+</section>
+
+<!-- ===================== CONTACT ===================== -->
+<section class="contact section" id="contact">
+    <div class="section__hd">
+        <span class="section__tag">// 06</span>
+        <h2 class="section__title">Hablemos</h2>
+        <div class="section__line"></div>
+    </div>
+
+    <div class="contact__container container">
+        <div class="contact__info">
+            <p class="contact__intro">
+                Estoy disponible para <strong>proyectos freelance</strong>, 
+                colaboraciones y posiciones full-time. 
+                Escribeme y te respondo pronto.
+            </p>
+            <div class="contact__methods">
+                <a href="mailto:alvaro69aldama@gmail.com" class="cmethod mag-btn">
+                    <div class="cmethod__icon"><i class='bx bx-envelope'></i></div>
+                    <div class="cmethod__data"><span>Email</span><strong>alvaro69aldama@gmail.com</strong></div>
+                    <i class='bx bx-chevron-right cmethod__arrow'></i>
+                </a>
+                <a href="https://wa.me/527227453989" target="_blank" class="cmethod mag-btn">
+                    <div class="cmethod__icon"><i class='bx bxl-whatsapp'></i></div>
+                    <div class="cmethod__data"><span>WhatsApp</span><strong>+52 722 745 3989</strong></div>
+                    <i class='bx bx-chevron-right cmethod__arrow'></i>
+                </a>
+                <a href="https://github.com/Alvaro6ix" target="_blank" class="cmethod mag-btn">
+                    <div class="cmethod__icon"><i class='bx bxl-github'></i></div>
+                    <div class="cmethod__data"><span>GitHub</span><strong>@Alvaro6ix</strong></div>
+                    <i class='bx bx-chevron-right cmethod__arrow'></i>
+                </a>
+            </div>
+        </div>
+
+        <form class="contact__form" id="contact-form" novalidate>
+            <div class="cform__group">
+                <input type="text" name="name" id="f-name" placeholder=" " required autocomplete="name">
+                <label for="f-name">Nombre completo</label>
+                <div class="cform__line"></div>
+            </div>
+            <div class="cform__group">
+                <input type="email" name="email" id="f-email" placeholder=" " required autocomplete="email">
+                <label for="f-email">Correo electronico</label>
+                <div class="cform__line"></div>
+            </div>
+            <div class="cform__group cform__group--area">
+                <textarea name="message" id="f-msg" rows="5" placeholder=" " required></textarea>
+                <label for="f-msg">Mensaje</label>
+                <div class="cform__line"></div>
+            </div>
+            <button type="submit" class="btn btn--solid btn--full mag-btn" id="submit-btn">
+                <span class="btn__inner"><i class='bx bx-send'></i> Enviar Mensaje</span>
+                <span class="btn__loader" id="btn-loader"></span>
+            </button>
+            <p class="cform__msg" id="contact-message"></p>
+        </form>
+    </div>
+</section>
+
+</main>
+
+<!-- Footer -->
+<footer class="footer">
+    <div class="footer__inner container">
+        <div class="footer__brand">
+            <span class="footer__logo"><span>&lt;</span>Code69<span> /&gt;</span></span>
+            <p>Full Stack Developer & Ingeniero en Sistemas</p>
+        </div>
+        <nav class="footer__nav">
+            <a href="#about">Sobre mi</a>
+            <a href="#experience">Experiencia</a>
+            <a href="#work">Proyectos</a>
+            <a href="#certificates">Certificados</a>
+        </nav>
+        <div class="footer__socials">
+            <a href="https://github.com/Alvaro6ix" target="_blank" aria-label="GitHub"><i class='bx bxl-github'></i></a>
+            <a href="mailto:alvaro69aldama@gmail.com" aria-label="Email"><i class='bx bxl-gmail'></i></a>
+            <a href="https://wa.me/527227453989" target="_blank" aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+        </div>
+        <span class="footer__copy">&copy; <span id="yr">2026</span> Alvaro Aldama — Todos los derechos reservados.</span>
+    </div>
+</footer>
+
+<button class="back-top" id="back-top" aria-label="Volver arriba">
+    <i class='bx bx-chevron-up'></i>
+</button>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mixitup/3.3.1/mixitup.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.2/dist/ScrollTrigger.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.1/vanilla-tilt.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+<script src="main.js"></script>
 </body>
 </html>
