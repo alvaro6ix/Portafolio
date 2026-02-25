@@ -9,17 +9,17 @@
 gsap.registerPlugin(ScrollTrigger);
 
 /* ─── DOM Helpers ─── */
-const qs  = (s, p = document) => p.querySelector(s);
+const qs = (s, p = document) => p.querySelector(s);
 const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
 /* ================================================================
    1. LOADER
    ================================================================ */
 (function initLoader() {
-  const loader  = qs('#loader');
-  const cmdEl   = qs('#loader-cmd');
-  const fillEl  = qs('#loader-fill');
-  const pctEl   = qs('#loader-pct');
+  const loader = qs('#loader');
+  const cmdEl = qs('#loader-cmd');
+  const fillEl = qs('#loader-fill');
+  const pctEl = qs('#loader-pct');
 
   const commands = [
     'npm install portfolio...',
@@ -46,8 +46,8 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
       cmdEl.textContent = currentCmd;
       const progress = ((cmdIdx / commands.length) + (charIdx / target.length / commands.length));
       pct = Math.round(progress * 100);
-      fillEl.style.width = pct + '%';
-      pctEl.textContent  = pct + '%';
+      fillEl.style.transform = `scaleX(${pct / 100})`;
+      pctEl.textContent = pct + '%';
       setTimeout(typeChar, 30 + Math.random() * 25);
     } else {
       cmdIdx++; charIdx = 0; currentCmd = '';
@@ -56,7 +56,7 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
   }
 
   function finishLoader() {
-    fillEl.style.width = '100%';
+    fillEl.style.transform = 'scaleX(1)';
     pctEl.textContent = '100%';
     setTimeout(() => {
       loader.classList.add('hidden');
@@ -77,11 +77,11 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
   const ctx = canvas.getContext('2d');
   let W, H, nodes = [], mouse = { x: -9999, y: -9999 };
   const NODE_COUNT = window.innerWidth < 768 ? 50 : 100;
-  const MAX_DIST   = window.innerWidth < 768 ? 100 : 140;
+  const MAX_DIST = window.innerWidth < 768 ? 100 : 140;
   const GREEN = { r: 31, g: 147, b: 70 };
 
   function resize() {
-    W = canvas.width  = canvas.offsetWidth;
+    W = canvas.width = canvas.offsetWidth;
     H = canvas.height = canvas.offsetHeight;
   }
 
@@ -89,11 +89,11 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
     nodes = [];
     for (let i = 0; i < NODE_COUNT; i++) {
       nodes.push({
-        x:   Math.random() * W,
-        y:   Math.random() * H,
-        vx:  (Math.random() - .5) * .5,
-        vy:  (Math.random() - .5) * .5,
-        r:   Math.random() * 1.8 + .6,
+        x: Math.random() * W,
+        y: Math.random() * H,
+        vx: (Math.random() - .5) * .5,
+        vy: (Math.random() - .5) * .5,
+        r: Math.random() * 1.8 + .6,
         pulse: Math.random() * Math.PI * 2
       });
     }
@@ -104,8 +104,8 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 
     // Update + draw nodes
     for (const n of nodes) {
-      n.x  += n.vx;
-      n.y  += n.vy;
+      n.x += n.vx;
+      n.y += n.vy;
       n.pulse += .02;
       if (n.x < 0 || n.x > W) n.vx *= -1;
       if (n.y < 0 || n.y > H) n.vy *= -1;
@@ -122,7 +122,7 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
       ctx.beginPath();
       ctx.arc(n.x, n.y, n.r + .4 * Math.sin(n.pulse), 0, Math.PI * 2);
       ctx.fillStyle = `rgba(${GREEN.r},${GREEN.g},${GREEN.b},${alpha})`;
-      ctx.shadowBlur  = 8;
+      ctx.shadowBlur = 8;
       ctx.shadowColor = `rgba(${GREEN.r},${GREEN.g},${GREEN.b},.4)`;
       ctx.fill();
       ctx.shadowBlur = 0;
@@ -165,7 +165,7 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
    ================================================================ */
 (function initCursor() {
   if (window.innerWidth < 769) return;
-  const dot  = qs('#cursor');
+  const dot = qs('#cursor');
   const ring = qs('#cursor-ring');
   if (!dot || !ring) return;
 
@@ -177,10 +177,10 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
   function animRing() {
     rx += (mx - rx) * .12;
     ry += (my - ry) * .12;
-    dot.style.left  = mx + 'px';
-    dot.style.top   = my + 'px';
+    dot.style.left = mx + 'px';
+    dot.style.top = my + 'px';
     ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
+    ring.style.top = ry + 'px';
     requestAnimationFrame(animRing);
   }
   animRing();
@@ -219,15 +219,15 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
   if (window.innerWidth < 769) return;
 
   qsa('.mag-btn').forEach(btn => {
-    btn.addEventListener('mousemove', function(e) {
+    btn.addEventListener('mousemove', function (e) {
       const rect = this.getBoundingClientRect();
-      const cx = rect.left + rect.width  / 2;
-      const cy = rect.top  + rect.height / 2;
+      const cx = rect.left + rect.width / 2;
+      const cy = rect.top + rect.height / 2;
       const dx = (e.clientX - cx) * .28;
       const dy = (e.clientY - cy) * .28;
       gsap.to(this, { x: dx, y: dy, duration: .3, ease: 'power2.out' });
     });
-    btn.addEventListener('mouseleave', function() {
+    btn.addEventListener('mouseleave', function () {
       gsap.to(this, { x: 0, y: 0, duration: .5, ease: 'elastic.out(1,.4)' });
     });
   });
@@ -260,7 +260,7 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 (function initTheme() {
   const btn = qs('#theme-button');
   const saved = localStorage.getItem('theme');
-  if (saved === 'light') { document.body.classList.add('light-theme'); btn.classList.replace('bx-moon','bx-sun'); }
+  if (saved === 'light') { document.body.classList.add('light-theme'); btn.classList.replace('bx-moon', 'bx-sun'); }
 
   btn.addEventListener('click', () => {
     const isLight = document.body.classList.toggle('light-theme');
@@ -299,16 +299,16 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
 function initHomeAnimations() {
   const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-  tl.from('.home__status',  { y: 20, opacity: 0, duration: .6 })
-    .from('.name__line',    { y: 60, opacity: 0, duration: .8, stagger: .15 }, '-=.3')
-    .from('.home__role',    { y: 20, opacity: 0, duration: .6 }, '-=.3')
-    .from('.home__desc',    { y: 20, opacity: 0, duration: .6 }, '-=.3')
-    .from('.home__cta',     { y: 20, opacity: 0, duration: .6 }, '-=.3')
+  tl.from('.home__status', { y: 20, opacity: 0, duration: .6 })
+    .from('.name__line', { y: 60, opacity: 0, duration: .8, stagger: .15 }, '-=.3')
+    .from('.home__role', { y: 20, opacity: 0, duration: .6 }, '-=.3')
+    .from('.home__desc', { y: 20, opacity: 0, duration: .6 }, '-=.3')
+    .from('.home__cta', { y: 20, opacity: 0, duration: .6 }, '-=.3')
     .from('.home__metrics', { y: 20, opacity: 0, duration: .6 }, '-=.3')
     .from('.hero__photo-wrap', { scale: .8, opacity: 0, duration: 1, ease: 'back.out(1.5)' }, '-=.8')
-    .from('.float-tag',     { scale: 0, opacity: 0, stagger: .15, duration: .5, ease: 'back.out(2)' }, '-=.4')
+    .from('.float-tag', { scale: 0, opacity: 0, stagger: .15, duration: .5, ease: 'back.out(2)' }, '-=.4')
     .from('.home__socials', { x: -20, opacity: 0, duration: .6 }, '-=.5')
-    .from('.scroll__hint',  { y: 10, opacity: 0, duration: .6 }, '-=.4');
+    .from('.scroll__hint', { y: 10, opacity: 0, duration: .6 }, '-=.4');
 }
 
 /* ================================================================
@@ -401,13 +401,13 @@ function initHomeAnimations() {
    ================================================================ */
 (function initSkillBars() {
   qsa('.sbar__fill').forEach(bar => {
-    const targetW = bar.dataset.w + '%';
+    const targetW = bar.dataset.w;
     ScrollTrigger.create({
       trigger: bar,
       start: 'top 88%',
       once: true,
       onEnter: () => {
-        gsap.to(bar, { width: targetW, duration: 1.4, ease: 'power2.out', delay: .1 });
+        gsap.to(bar, { scaleX: targetW / 100, duration: 1.4, ease: 'power2.out', delay: .1 });
       }
     });
   });
@@ -427,8 +427,8 @@ function initHomeAnimations() {
         const obj = { val: 0 };
         gsap.to(obj, {
           val: target, duration: 1.8,
-          ease: 'power2.out', round: 1,
-          onUpdate: () => { el.textContent = obj.val + '+'; }
+          ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(obj.val) + '+'; }
         });
       }
     });
@@ -445,8 +445,8 @@ function initHomeAnimations() {
         const obj = { val: 0 };
         gsap.to(obj, {
           val: target, duration: 1.8,
-          ease: 'power2.out', round: 1,
-          onUpdate: () => { el.textContent = obj.val + '+'; }
+          ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(obj.val) + '+'; }
         });
       }
     });
@@ -460,29 +460,20 @@ function initHomeAnimations() {
   if (typeof VanillaTilt === 'undefined') return;
 
   VanillaTilt.init(qsa('[data-tilt]'), {
-    max:          8,
-    speed:        400,
-    glare:        true,
-    'max-glare':  .08,
-    scale:        1.02
+    max: 8,
+    speed: 400,
+    glare: true,
+    'max-glare': .08,
+    scale: 1.02
   });
-
-  // Override about-img tilt (stronger)
-  const aboutImg = qs('#about-tilt');
-  if (aboutImg && aboutImg._vanillaTilt) {
-    aboutImg._vanillaTilt.destroy();
-  }
-  if (aboutImg) {
-    VanillaTilt.init([aboutImg], { max: 10, speed: 500, glare: true, 'max-glare': .12, scale: 1.03 });
-  }
 })();
 
 /* ================================================================
    14. NAV — active link on scroll
    ================================================================ */
 (function initActiveNav() {
-  const sections  = qsa('section[id]');
-  const navLinks  = qsa('.nav__link');
+  const sections = qsa('section[id]');
+  const navLinks = qsa('.nav__link');
 
   function updateNav() {
     const offset = window.scrollY + innerHeight * .35;
@@ -509,7 +500,7 @@ function initHomeAnimations() {
     if (!target) return;
     e.preventDefault();
     const offset = target.getBoundingClientRect().top + window.scrollY
-                 - qs('#header').offsetHeight - 10;
+      - qs('#header').offsetHeight - 10;
     window.scrollTo({ top: offset, behavior: 'smooth' });
   });
 })();
@@ -539,7 +530,7 @@ function initHomeAnimations() {
   });
 
   qsa('.filter-btn').forEach(btn => {
-    btn.addEventListener('click', function() {
+    btn.addEventListener('click', function () {
       qsa('.filter-btn').forEach(b => b.classList.remove('active-filter'));
       this.classList.add('active-filter');
       mixer.filter(this.dataset.filter === 'all' ? 'all' : this.dataset.filter);
@@ -551,8 +542,8 @@ function initHomeAnimations() {
    18. CONTACT FORM (EmailJS)
    ================================================================ */
 (function initContactForm() {
-  const form    = qs('#contact-form');
-  const msgEl   = qs('#contact-message');
+  const form = qs('#contact-form');
+  const msgEl = qs('#contact-message');
   const submitBtn = qs('#submit-btn');
   if (!form || !msgEl) return;
 
@@ -571,7 +562,7 @@ function initHomeAnimations() {
       msgEl.textContent = '✓ Mensaje enviado! Te contactare pronto.';
       msgEl.style.color = 'var(--green)';
       form.reset();
-    } catch(err) {
+    } catch (err) {
       console.error(err);
       msgEl.textContent = '✗ Error al enviar. Intenta por WhatsApp o Email directo.';
       msgEl.style.color = '#e05252';
@@ -596,10 +587,10 @@ function initHomeAnimations() {
    ================================================================ */
 (function initCardGlow() {
   qsa('.skill-card, .work__card, .tl__card').forEach(card => {
-    card.addEventListener('mousemove', function(e) {
+    card.addEventListener('mousemove', function (e) {
       const rect = this.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width  * 100).toFixed(1) + '%';
-      const y = ((e.clientY - rect.top)  / rect.height * 100).toFixed(1) + '%';
+      const x = ((e.clientX - rect.left) / rect.width * 100).toFixed(1) + '%';
+      const y = ((e.clientY - rect.top) / rect.height * 100).toFixed(1) + '%';
       this.style.setProperty('--mx', x);
       this.style.setProperty('--my', y);
       const glow = this.querySelector('.skill-card__glow, .work__card-glow, .tl__card-glow');
