@@ -349,6 +349,15 @@ function initHomeAnimations() {
     y: 30, opacity: 0, stagger: .15, duration: .7, ease: 'power3.out'
   });
 
+  // Services cards
+  gsap.utils.toArray('.service-card').forEach((card, i) => {
+    gsap.from(card, {
+      scrollTrigger: { trigger: card, start: 'top 85%', once: true },
+      y: 40, opacity: 0, duration: .8,
+      delay: (i % 3) * .1, ease: 'power3.out'
+    });
+  });
+
   // Timeline cards
   gsap.utils.toArray('.tl__item').forEach((item, i) => {
     gsap.from(item, {

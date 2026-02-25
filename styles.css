@@ -1217,6 +1217,94 @@ body.light-theme .btn--ghost:hover {
   font-family: var(--font-mono);
 }
 
+/* ====== SERVICES ====== */
+.services__container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.service-card {
+  position: relative;
+  background: hsla(220, 32%, 11%, .4);
+  backdrop-filter: blur(12px);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+  transition: transform .4s, border-color .4s;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--green-dim);
+}
+
+.service-card__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--green);
+  opacity: 0;
+  filter: blur(40px);
+  transition: opacity .4s;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.service-card:hover .service-card__glow {
+  opacity: .08;
+}
+
+.service-card__icon {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto 1.5rem;
+  background: var(--green-dim);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: var(--green);
+  transition: transform .4s, background .4s;
+}
+
+.service-card:hover .service-card__icon {
+  transform: scale(1.1);
+  background: var(--green);
+  color: var(--bg);
+}
+
+.service-card__title {
+  font-family: var(--font-head);
+  font-size: var(--fs-md);
+  color: var(--title);
+  margin-bottom: 1rem;
+}
+
+.service-card__desc {
+  font-size: var(--fs-sm);
+  color: var(--text);
+  line-height: 1.6;
+}
+
+body.light-theme .service-card {
+  background: hsla(0, 0%, 100%, .6);
+}
+
+body.light-theme .service-card__icon {
+  background: hsla(142, 76%, 36%, .1);
+}
+
+body.light-theme .service-card:hover .service-card__icon {
+  background: var(--green);
+}
+
 /* ====== EXPERIENCE ====== */
 .experience__container {
   max-width: 760px;
