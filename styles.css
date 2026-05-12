@@ -4337,3 +4337,81 @@ body.light-theme .bubbles-loader__strich-2 {
     page-break-inside: avoid;
   }
 }
+
+/* ============================================================
+   FIX: Nav menu — 9 icons must fit on small screens
+   ============================================================ */
+
+/* Use gap-based distribution so icons stay compact and the bar shrinks naturally */
+.nav__list {
+  gap: .2rem;
+  width: 100%;
+}
+
+/* Tablet & small laptop */
+@media (max-width: 768px) {
+  .nav__menu {
+    max-width: 380px;
+    padding: .6rem 1rem;
+  }
+
+  .nav__link {
+    width: 34px;
+    height: 34px;
+    font-size: 1.1rem;
+  }
+}
+
+/* Mobile L (≤560px) */
+@media (max-width: 560px) {
+  .nav__menu {
+    width: calc(100% - 1.5rem);
+    max-width: 360px;
+    padding: .5rem .75rem;
+    bottom: .65rem;
+  }
+
+  .nav__link {
+    width: 32px;
+    height: 32px;
+    font-size: 1.05rem;
+  }
+}
+
+/* Mobile S (≤400px) — squeeze tighter */
+@media (max-width: 400px) {
+  .nav__menu {
+    width: calc(100% - 1rem);
+    max-width: none;
+    padding: .45rem .6rem;
+    border-radius: 22px;
+  }
+
+  .nav__link {
+    width: 28px;
+    height: 28px;
+    font-size: .95rem;
+  }
+
+  .nav__list {
+    gap: .1rem;
+  }
+
+  /* Disable tooltips on tiny screens (no room above) */
+  .nav__link[data-tip]:hover::after {
+    opacity: 0;
+  }
+}
+
+/* Mobile XS (≤340px) — very tight phones */
+@media (max-width: 340px) {
+  .nav__menu {
+    padding: .4rem .45rem;
+  }
+
+  .nav__link {
+    width: 26px;
+    height: 26px;
+    font-size: .88rem;
+  }
+}
