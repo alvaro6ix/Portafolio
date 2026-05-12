@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="no-js">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,9 @@
         content="Alvaro Aldama, Full Stack Developer, Ingeniero en Sistemas, React, Laravel, Firebase, Python, Inteligencia Artificial, Toluca, México, Code69, PWA, desarrollador web">
     <meta name="author" content="Alvaro Aldama">
     <meta name="robots" content="index, follow">
-    <meta name="theme-color" content="#0d1117">
+    <meta name="theme-color" content="#0d1117" media="(prefers-color-scheme: dark)">
+    <meta name="theme-color" content="#f5f7fa" media="(prefers-color-scheme: light)">
+    <meta name="color-scheme" content="dark light">
     <meta property="og:title" content="Alvaro Aldama | Full Stack Engineer & IA Developer">
     <meta property="og:description"
         content="Full Stack Developer con 2 años de experiencia. Especialista en PWAs, React, Laravel y automatización con IA.">
@@ -36,9 +38,12 @@
 
 <body>
 
+    <!-- Skip Link (a11y) -->
+    <a href="#main-content" class="skip-link">Saltar al contenido</a>
+
     <!-- Custom Cursor -->
-    <div class="cursor" id="cursor"></div>
-    <div class="cursor-ring" id="cursor-ring"></div>
+    <div class="cursor" id="cursor" aria-hidden="true"></div>
+    <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
 
     <!-- Noise Texture Overlay -->
     <div class="noise-overlay" aria-hidden="true"></div>
@@ -64,33 +69,58 @@
     <!-- Header -->
     <header class="header" id="header">
         <nav class="nav container">
-            <a href="#home" class="nav__logo">
+            <a href="#home" class="nav__logo" aria-label="Code69 - Inicio">
                 <span class="bracket">&lt;</span>Code69<span class="bracket"> /&gt;</span>
             </a>
-            <i class="bx bx-moon theme-btn" id="theme-button" data-tip="Cambiar tema" role="button" tabindex="0"
-                aria-label="Cambiar tema"></i>
+            <!-- Theme Toggle (Polygon View-Transition) -->
+            <button class="theme-btn theme-btn--polygon" id="theme-button" type="button"
+                aria-label="Cambiar tema" aria-pressed="false" data-tip="Cambiar tema">
+                <svg class="theme-btn__svg" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+                    <!-- Sun -->
+                    <g class="theme-btn__sun">
+                        <circle cx="12" cy="12" r="4.2"></circle>
+                        <g class="theme-btn__rays">
+                            <line x1="12" y1="2.5" x2="12" y2="5"></line>
+                            <line x1="12" y1="19" x2="12" y2="21.5"></line>
+                            <line x1="2.5" y1="12" x2="5" y2="12"></line>
+                            <line x1="19" y1="12" x2="21.5" y2="12"></line>
+                            <line x1="5.2" y1="5.2" x2="6.9" y2="6.9"></line>
+                            <line x1="17.1" y1="17.1" x2="18.8" y2="18.8"></line>
+                            <line x1="5.2" y1="18.8" x2="6.9" y2="17.1"></line>
+                            <line x1="17.1" y1="6.9" x2="18.8" y2="5.2"></line>
+                        </g>
+                    </g>
+                    <!-- Moon (mask) -->
+                    <mask id="moon-mask">
+                        <rect x="0" y="0" width="100%" height="100%" fill="white"></rect>
+                        <circle class="theme-btn__moon-cutout" cx="18" cy="8" r="9" fill="black"></circle>
+                    </mask>
+                    <circle class="theme-btn__moon" cx="12" cy="12" r="9" mask="url(#moon-mask)"></circle>
+                </svg>
+            </button>
         </nav>
     </header>
 
     <!-- Navigation Menu (Moved outside header to prevent backdrop-filter stacking context issues) -->
-    <div class="nav__menu" id="nav-menu">
+    <nav class="nav__menu" id="nav-menu" aria-label="Navegación principal">
         <ul class="nav__list">
-            <li><a href="#home" class="nav__link active-link" data-tip="Inicio"><i class='bx bx-home-alt'></i></a></li>
-            <li><a href="#about" class="nav__link" data-tip="Sobre mí"><i class='bx bx-user'></i></a></li>
-            <li><a href="#services" class="nav__link" data-tip="Servicios"><i class='bx bx-server'></i></a></li>
-            <li><a href="#experience" class="nav__link" data-tip="Experiencia"><i class='bx bx-briefcase-alt-2'></i></a>
+            <li><a href="#home" class="nav__link active-link" data-tip="Inicio" aria-label="Inicio"><i class='bx bx-home-alt' aria-hidden="true"></i></a></li>
+            <li><a href="#about" class="nav__link" data-tip="Sobre mí" aria-label="Sobre mí"><i class='bx bx-user' aria-hidden="true"></i></a></li>
+            <li><a href="#services" class="nav__link" data-tip="Servicios" aria-label="Servicios"><i class='bx bx-server' aria-hidden="true"></i></a></li>
+            <li><a href="#experience" class="nav__link" data-tip="Experiencia" aria-label="Experiencia"><i class='bx bx-briefcase-alt-2' aria-hidden="true"></i></a>
             </li>
-            <li><a href="#skills" class="nav__link" data-tip="Habilidades"><i class='bx bx-chip'></i></a></li>
-            <li><a href="#work" class="nav__link" data-tip="Proyectos"><i class='bx bx-folder-open'></i></a>
+            <li><a href="#skills" class="nav__link" data-tip="Habilidades" aria-label="Habilidades"><i class='bx bx-chip' aria-hidden="true"></i></a></li>
+            <li><a href="#work" class="nav__link" data-tip="Proyectos" aria-label="Proyectos"><i class='bx bx-folder-open' aria-hidden="true"></i></a>
             </li>
-            <li><a href="#certificates" class="nav__link" data-tip="Certificados"><i
-                        class='bx bxs-certification'></i></a></li>
-            <li><a href="#contact" class="nav__link" data-tip="Contacto"><i class='bx bx-message-square-detail'></i></a>
+            <li><a href="#faq" class="nav__link" data-tip="FAQ" aria-label="Preguntas frecuentes"><i class='bx bx-help-circle' aria-hidden="true"></i></a></li>
+            <li><a href="#certificates" class="nav__link" data-tip="Certificados" aria-label="Certificados"><i
+                        class='bx bxs-certification' aria-hidden="true"></i></a></li>
+            <li><a href="#contact" class="nav__link" data-tip="Contacto" aria-label="Contacto"><i class='bx bx-message-square-detail' aria-hidden="true"></i></a>
             </li>
         </ul>
-    </div>
+    </nav>
 
-    <main class="main">
+    <main class="main" id="main-content">
 
         <!-- ===================== HOME ===================== -->
         <section class="home section" id="home">
@@ -99,9 +129,88 @@
 
             <div class="home__container container">
                 <div class="home__data">
-                    <div class="home__status">
-                        <span class="status__dot"></span>
-                        <span>Disponible para proyectos</span>
+
+                    <!-- Light Switch (Uiverse jetakazono/sour-catfish-79 — recolored to portfolio green) -->
+                    <div class="lightswitch" aria-label="Estado de disponibilidad">
+                        <div class="lightswitch__bg" aria-hidden="true">
+                            <div class="lightswitch__light-1"></div>
+                            <div class="lightswitch__light-2"></div>
+                            <div class="lightswitch__light-3"></div>
+                        </div>
+                        <label class="lightswitch__area-wrapper">
+                            <span class="visually-hidden">Disponible para proyectos</span>
+                            <div class="lightswitch__wrapper">
+                                <input checked type="checkbox" aria-label="Toggle disponibilidad">
+                                <div class="lightswitch__button">
+                                    <div class="lightswitch__part-1">
+                                        <div class="lightswitch__case">
+                                            <div class="lightswitch__mask"></div>
+                                            <div class="lightswitch__line"></div>
+                                        </div>
+                                        <div class="lightswitch__screw">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 115 126" height="126" width="115" aria-hidden="true" focusable="false">
+                                                <g style="--i:1" class="lightswitch__g-1">
+                                                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#262626" fill="url(#ls_steel)" d="M91.4371 119V7C91.4371 3.686 94.1231 1 97.4371 1H107.617C110.931 1 113.617 3.686 113.617 7V119C113.617 122.314 110.931 125 107.617 125H97.4371C94.1231 125 91.4371 122.314 91.4371 119Z"></path>
+                                                    <path fill-opacity="0.4" fill="#262626" d="M94 6C94 3.79086 95.7909 2 98 2H109C111.209 2 113 3.79086 113 6V88.2727C113 89.2267 112.227 90 111.273 90C101.733 90 94 82.2667 94 72.7273V6Z"></path>
+                                                    <path fill="currentColor" d="M98.0101 11.589C98.0101 9.57 99.6461 7.93402 101.665 7.93402H105.027C107.046 7.93402 108.682 9.57 108.682 11.589C108.682 13.608 107.046 15.244 105.027 15.244H101.665C99.6461 15.244 98.0101 13.607 98.0101 11.589Z" style="--i:1" class="lightswitch__dot"></path>
+                                                </g>
+                                                <g style="--i:2" class="lightswitch__g-2">
+                                                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#262626" fill="url(#ls_steel)" d="M69.256 119V7C69.256 3.686 71.942 1 75.256 1H85.436C88.75 1 91.436 3.686 91.436 7V119C91.436 122.314 88.75 125 85.436 125H75.256C71.943 125 69.256 122.314 69.256 119Z"></path>
+                                                    <path fill-opacity="0.4" fill="#262626" d="M72 6C72 3.79086 73.7909 2 76 2H87C89.2091 2 91 3.79086 91 6V88.2727C91 89.2267 90.2267 90 89.2727 90C79.7333 90 72 82.2667 72 72.7273V6Z"></path>
+                                                    <path fill="currentColor" d="M76.011 11.589C76.011 9.57 77.647 7.93402 79.666 7.93402H83.028C85.047 7.93402 86.683 9.57 86.683 11.589C86.683 13.608 85.047 15.244 83.028 15.244H79.666C77.647 15.244 76.011 13.607 76.011 11.589Z" style="--i:2" class="lightswitch__dot"></path>
+                                                </g>
+                                                <g style="--i:3" class="lightswitch__g-3">
+                                                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#262626" fill="url(#ls_steel)" d="M47.076 119V7C47.076 3.686 49.762 1 53.076 1H63.256C66.57 1 69.256 3.686 69.256 7V119C69.256 122.314 66.57 125 63.256 125H53.076C49.762 125 47.076 122.314 47.076 119Z"></path>
+                                                    <path fill-opacity="0.4" fill="#262626" d="M50 6C50 3.79086 51.7909 2 54 2H65C67.2091 2 69 3.79086 69 6V86.9664C69 88.6418 67.6418 90 65.9664 90C57.1484 90 50 82.8516 50 74.0336V6Z"></path>
+                                                    <path fill="currentColor" d="M54.012 11.589C54.012 9.57 55.648 7.93396 57.667 7.93396H61.029C63.048 7.93396 64.684 9.57 64.684 11.589C64.684 13.608 63.048 15.244 61.029 15.244H57.667C55.648 15.244 54.012 13.607 54.012 11.589Z" style="--i:3" class="lightswitch__dot"></path>
+                                                </g>
+                                                <g style="--i:4" class="lightswitch__g-4">
+                                                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#262626" fill="url(#ls_steel)" d="M23.617 98.853V27.147C23.617 21.501 27.11 16.262 32.838 13.318L47.076 6V120L32.838 112.682C27.111 109.738 23.617 104.499 23.617 98.853Z"></path>
+                                                    <path fill-opacity="0.4" fill="#262626" d="M29.5 18.4083C29.5 16.9267 30.319 15.5664 31.6284 14.8732L46.5 7V78.2374C46.5 80.0393 45.0393 81.5 43.2374 81.5C35.6504 81.5 29.5 75.3496 29.5 67.7626V18.4083Z"></path>
+                                                </g>
+                                                <g style="--i:5" class="lightswitch__g-5">
+                                                    <path stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="10" stroke-width="2" stroke="#262626" fill="url(#ls_steel)" d="M1.00006 76.162V49.838C1.00006 43.314 4.91107 37.235 11.3891 33.691L23.6171 27V99L11.3881 92.309C4.91106 88.765 1.00006 82.686 1.00006 76.162Z"></path>
+                                                    <path fill-opacity="0.4" fill="#262626" d="M7.30432 51.7375C7.12191 41.7049 13.279 32.6454 22.6744 29.1221L23 29L23 73.5885C23 74.368 22.368 75 21.5884 75C13.8927 75 7.61519 68.8356 7.47529 61.1412L7.30432 51.7375Z"></path>
+                                                </g>
+                                                <defs>
+                                                    <linearGradient gradientUnits="userSpaceOnUse" y2="125" x2="105.425" y1="1" x1="105.425" id="ls_steel">
+                                                        <stop stop-color="#7A7A7A" offset="0.1"></stop>
+                                                        <stop stop-color="#EEEEEE" offset="0.3125"></stop>
+                                                        <stop stop-color="#787878" offset="0.596"></stop>
+                                                        <stop stop-color="#666666" offset="0.798"></stop>
+                                                        <stop stop-color="#9E9E9E" offset="1"></stop>
+                                                    </linearGradient>
+                                                </defs>
+                                            </svg>
+                                        </div>
+                                    </div>
+                                    <div class="lightswitch__part-2">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 190 76" height="76" width="190" class="lightswitch__path-glass" aria-hidden="true">
+                                            <path stroke="currentColor" d="M0 0.5C0 0.5 149 0.5 156.5 0.5C164 0.5 189 8.5 189 37.5C189 66.5 164 75.5 157.5 75.5C151 75.5 1 75.5 1 75.5"></path>
+                                        </svg>
+                                        <div class="lightswitch__glass">
+                                            <div class="lightswitch__glass-reflex"></div>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 52" height="52" width="49" class="lightswitch__filament" aria-hidden="true">
+                                                <path stroke="#aaffc8" d="M32.5 26.1085C32.5 26.1085 32 5.90019 38.5 2.10852C45 -1.68315 49 5.10852 47.5 9.60852C46 14.1085 39.5 17.1085 21 18.1085C13.667 18.5049 6.49118 18.0371 0.5 17.328"></path>
+                                                <path stroke="#aaffc8" d="M32.5 26C32.5 26 32 46.2083 38.5 50C45 53.7917 49 47 47.5 42.5C46 38 39.5 35 21 34C13.667 33.6036 6.49118 34.0714 0.5 34.7805"></path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 52" height="52" width="49" class="lightswitch__filament lightswitch__filament-on" aria-hidden="true">
+                                                <path stroke="white" d="M32.5 26.1085C32.5 26.1085 32 5.90019 38.5 2.10852C45 -1.68315 49 5.10852 47.5 9.60852C46 14.1085 39.5 17.1085 21 18.1085C13.667 18.5049 6.49118 18.0371 0.5 17.328"></path>
+                                                <path stroke="white" d="M32.5 26C32.5 26 32 46.2083 38.5 50C45 53.7917 49 47 47.5 42.5C46 38 39.5 35 21 34C13.667 33.6036 6.49118 34.0714 0.5 34.7805"></path>
+                                            </svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 49 52" height="52" width="49" class="lightswitch__filament lightswitch__filament-blur lightswitch__filament-on" aria-hidden="true">
+                                                <path stroke="currentColor" d="M32.5 26.1085C32.5 26.1085 32 5.90019 38.5 2.10852C45 -1.68315 49 5.10852 47.5 9.60852C46 14.1085 39.5 17.1085 21 18.1085C13.667 18.5049 6.49118 18.0371 0.5 17.328"></path>
+                                                <path stroke="currentColor" d="M32.5 26C32.5 26 32 46.2083 38.5 50C45 53.7917 49 47 47.5 42.5C46 38 39.5 35 21 34C13.667 33.6036 6.49118 34.0714 0.5 34.7805"></path>
+                                            </svg>
+                                            <span class="lightswitch__label">
+                                                <span class="lightswitch__label-on">Disponible</span>
+                                                <span class="lightswitch__label-off">Ocupado</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </label>
                     </div>
                     <h1 class="home__name" id="home-title">
                         <span class="name__line" data-reveal>Alvaro</span>
@@ -161,12 +270,12 @@
             </div>
 
             <div class="home__socials">
-                <a href="https://github.com/Alvaro6ix" target="_blank" class="social__link mag-btn"
-                    aria-label="GitHub"><i class='bx bxl-github'></i></a>
-                <a href="https://wa.me/527227453989" target="_blank" class="social__link mag-btn"
-                    aria-label="WhatsApp"><i class='bx bxl-whatsapp'></i></a>
+                <a href="https://github.com/Alvaro6ix" target="_blank" rel="noopener noreferrer" class="social__link mag-btn"
+                    aria-label="GitHub"><i class='bx bxl-github' aria-hidden="true"></i></a>
+                <a href="https://wa.me/527227453989" target="_blank" rel="noopener noreferrer" class="social__link mag-btn"
+                    aria-label="WhatsApp"><i class='bx bxl-whatsapp' aria-hidden="true"></i></a>
                 <a href="mailto:alvaro69aldama@gmail.com" class="social__link mag-btn" aria-label="Email"><i
-                        class='bx bx-envelope'></i></a>
+                        class='bx bx-envelope' aria-hidden="true"></i></a>
             </div>
 
             <a href="#about" class="scroll__hint" aria-label="Ir a la sección Sobre mí">
@@ -671,12 +780,32 @@
                     </div>
                     <div class="work__body">
                         <div class="work__meta"><span class="work__type">Landing</span><a
-                                href="https://wacha-eri.vercel.app/" target="_blank" class="work__ext-link"
-                                aria-label="Ver demo"><i class='bx bx-link-external'></i> Ver demo</a></div>
+                                href="https://wacha-eri.vercel.app/" target="_blank" rel="noopener noreferrer"
+                                class="work__ext-link"
+                                aria-label="Ver demo de Wacha Eri"><i class='bx bx-link-external' aria-hidden="true"></i> Ver demo</a></div>
                         <h3>Wacha Eri</h3>
                         <p>Páginas web con menu de negocio de Snacks, botones funcionales, redes, ubicacion con Maps y
                             menu fisico.</p>
                         <div class="work__techs"><span>HTML</span><span>JS</span><span>CSS</span><span>Canva</span>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="work__card mix web" data-tilt data-tilt-max="6" data-tilt-speed="400">
+                    <div class="work__card-glow"></div>
+                    <div class="work__img-wrap">
+                        <img src="assets/img/sibelle.svg" alt="Sibelle Psicología" loading="lazy" width="800" height="600">
+                        <div class="work__badge">Nuevo</div>
+                    </div>
+                    <div class="work__body">
+                        <div class="work__meta"><span class="work__type">Landing Pro</span><a
+                                href="https://sibelle-psicologia.netlify.app/" target="_blank" rel="noopener noreferrer"
+                                class="work__ext-link"
+                                aria-label="Ver demo de Sibelle Psicología"><i class='bx bx-link-external' aria-hidden="true"></i> Ver demo</a></div>
+                        <h3>Sibelle Psicología</h3>
+                        <p>Landing profesional para Psic. Evelyn Sibelle: servicios de terapia, regularización académica,
+                            contacto vía WhatsApp y consultas online.</p>
+                        <div class="work__techs"><span>HTML</span><span>CSS</span><span>JS</span><span>Netlify</span>
                         </div>
                     </div>
                 </article>
@@ -728,6 +857,8 @@
                 <span class="section__tag">// 06</span>
                 <h2 class="section__title">Certificaciones</h2>
                 <div class="section__line"></div>
+                <p class="section__hint">Si un PDF no abre, intenta con <strong>click derecho → Abrir en pestaña
+                        nueva</strong> o descárgalo directamente.</p>
             </div>
 
             <div class="certs__grid container">
@@ -739,8 +870,8 @@
                     <span class="cert-card__src">Santander x Google</span>
                     <span class="cert-card__yr">2026</span>
                     <p>Modelos predictivos, algoritmos de clasificación y regresión.</p>
-                    <a href="assets/pdf/Domina la IA con Gemini.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Domina%20la%20IA%20con%20Gemini.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Domina la IA con Gemini (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -750,8 +881,8 @@
                     <span class="cert-card__src">Scrimba</span>
                     <span class="cert-card__yr">2026</span>
                     <p>Desarrollo de aplicaciones integrando APIs de OpenAI y modelos generativos.</p>
-                    <a href="assets/pdf/Build AI Apps with ChatGPT, Dall-E, and GPT-4 SCRIMBA.pdf" target="_blank"
-                        class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Build%20AI%20Apps%20with%20ChatGPT%2C%20Dall-E%2C%20and%20GPT-4%20SCRIMBA.pdf" target="_blank" rel="noopener noreferrer"
+                        class="cert-card__btn" aria-label="Ver certificado Build AI Apps con GPT-4 (PDF)"><i class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -761,8 +892,8 @@
                     <span class="cert-card__src">Google Cloud</span>
                     <span class="cert-card__yr">2026</span>
                     <p>Fundamentos de la IA generativa y grandes modelos de lenguaje (LLMs).</p>
-                    <a href="assets/pdf/Introduction to Generative AI por google cloud.pdf" target="_blank"
-                        class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Introduction%20to%20Generative%20AI%20por%20google%20cloud.pdf" target="_blank" rel="noopener noreferrer"
+                        class="cert-card__btn" aria-label="Ver certificado Introduction to Generative AI (PDF)"><i class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -773,7 +904,7 @@
                     <span class="cert-card__yr">2024</span>
                     <p>Diseño de prompts efectivos y modelos generativos en Vertex AI.</p>
                     <a href="https://www.credly.com/badges/f4b41fa2-b20b-4f5b-ad18-2eb1f546af25/public_url"
-                        target="_blank" class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+                        target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Prompt Design Vertex AI"><i class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -783,8 +914,8 @@
                     <span class="cert-card__src">Coursera</span>
                     <span class="cert-card__yr">2026</span>
                     <p>Técnicas de ingeniería de prompts y uso avanzado para la productividad.</p>
-                    <a href="assets/pdf/ChatGPT  por Cursea.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/ChatGPT%20%20por%20Cursea.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado ChatGPT por Coursera (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -794,8 +925,8 @@
                     <span class="cert-card__src">Pottencia</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Entrenamiento de modelos predictivos, clasificación y regresión.</p>
-                    <a href="assets/pdf/Fundamentos Machine Learning.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Fundamentos%20Machine%20Learning.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Fundamentos Machine Learning (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -805,8 +936,8 @@
                     <span class="cert-card__src">Santander X</span>
                     <span class="cert-card__yr">2024</span>
                     <p>Seguridad en el desarrollo de software y mitigación de riesgos en IA.</p>
-                    <a href="assets/pdf/Certificado Software-IA.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Certificado%20Software-IA.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Protección Software e IA (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -816,8 +947,8 @@
                     <span class="cert-card__src">Santander Academy</span>
                     <span class="cert-card__yr">2024</span>
                     <p>Desarrollo de scripts y aplicaciones con las mejores prácticas de Python.</p>
-                    <a href="assets/pdf/Certificado_Phyton.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Certificado_Phyton.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Python Programming (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -827,8 +958,8 @@
                     <span class="cert-card__src">Cisco Networking Academy</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Programación avanzada en Python, estructuras de datos y lógica.</p>
-                    <a href="assets/pdf/certificado fundamentos phyton.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/certificado%20fundamentos%20phyton.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Python Essentials Cisco (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -838,8 +969,8 @@
                     <span class="cert-card__src">Cisco Networking Academy</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Análisis de datos y visualización para la toma de decisiones.</p>
-                    <a href="assets/pdf/certificado ciencia de datos.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/certificado%20ciencia%20de%20datos.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Data Science Cisco (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -849,8 +980,8 @@
                     <span class="cert-card__src">Oracle Academy</span>
                     <span class="cert-card__yr">2024</span>
                     <p>Diseño de bases de datos relacionales, SQL y administración de datos.</p>
-                    <a href="assets/pdf/Alvaro Aldama certificado oracle.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/Alvaro%20Aldama%20certificado%20oracle.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Oracle Database Foundations (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -860,8 +991,8 @@
                     <span class="cert-card__src">IBM SkillsBuild</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Machine Learning, Deep Learning y el ecosistema de IA de IBM.</p>
-                    <a href="assets/pdf/IBMDesign20250311-28-3jm8vm.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/IBMDesign20250311-28-3jm8vm.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Fundamentos de IA IBM (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -871,8 +1002,8 @@
                     <span class="cert-card__src">Cisco Networking Academy</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Conceptos fundamentales de IA, ética y aplicaciones modernas.</p>
-                    <a href="assets/pdf/certificado Fundamentos de IA con IBM SkillsBuild.pdf" target="_blank"
-                        class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/certificado%20Fundamentos%20de%20IA%20con%20IBM%20SkillsBuild.pdf" target="_blank" rel="noopener noreferrer"
+                        class="cert-card__btn" aria-label="Ver certificado Fundamentos de IA Cisco (PDF)"><i class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -882,8 +1013,8 @@
                     <span class="cert-card__src">Pottencia</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Fundamentos y conceptos clave sobre Inteligencia Artificial aplicada.</p>
-                    <a href="assets/pdf/bases y conceptos potencia.pdf" target="_blank" class="cert-card__btn"><i
-                            class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/bases%20y%20conceptos%20potencia.pdf" target="_blank" rel="noopener noreferrer" class="cert-card__btn" aria-label="Ver certificado Bases clave de IA (PDF)"><i
+                            class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
                 <div class="cert-card" data-tilt data-tilt-max="6">
@@ -893,17 +1024,194 @@
                     <span class="cert-card__src">Cisco</span>
                     <span class="cert-card__yr">2025</span>
                     <p>Fundamentos de redes, protocolos y configuración de dispositivos.</p>
-                    <a href="assets/pdf/NetworkingBasicsUpdate20250318-25-5peh38.pdf" target="_blank"
-                        class="cert-card__btn"><i class='bx bx-show'></i> Ver</a>
+                    <a href="assets/pdf/NetworkingBasicsUpdate20250318-25-5peh38.pdf" target="_blank" rel="noopener noreferrer"
+                        class="cert-card__btn" aria-label="Ver certificado Network Basics Cisco (PDF)"><i class='bx bx-show' aria-hidden="true"></i> Ver</a>
                 </div>
 
+            </div>
+        </section>
+
+        <!-- ===================== FAQ ===================== -->
+        <section class="faq section" id="faq">
+            <div class="section__hd">
+                <span class="section__tag">// 07</span>
+                <h2 class="section__title">Preguntas Frecuentes</h2>
+                <div class="section__line"></div>
+            </div>
+
+            <div class="faq__container container">
+                <div class="faq__intro">
+
+                    <!-- Bubbles loader (Uiverse jeremy_4982/massive-falcon-52 — recolored green) -->
+                    <div class="bubbles-wrap" aria-hidden="true">
+                        <div class="bubbles-loader">
+                            <div class="bubbles-loader__strich-1"></div>
+                            <div class="bubbles-loader__strich-2"></div>
+                            <div class="bubble bubble--a"></div>
+                            <div class="bubble bubble--b"></div>
+                            <div class="bubble bubble--c"></div>
+                            <div class="bubble bubble--d"></div>
+                        </div>
+                    </div>
+
+                    <h3 class="faq__intro-title">¿Tienes dudas sobre mi perfil o servicios?</h3>
+                    <p class="faq__intro-desc">Aquí respondo lo más solicitado sobre mi CV, experiencia, formas de
+                        trabajo y proyectos. ¿No encuentras tu duda?
+                        <a href="#contact" class="faq__intro-link">Escríbeme directo</a>.
+                    </p>
+
+                    <!-- Liquid gooey button (Uiverse fateself/tricky-crab-38 — recolored green) -->
+                    <a href="#work" class="liquid-btn" aria-label="Ver mis proyectos">
+                        <p>Ver Proyectos</p>
+                        <div class="liquid-btn__liquid" aria-hidden="true">
+                            <span style="--i:0"><span></span></span>
+                            <span style="--i:1"><span></span></span>
+                            <span style="--i:2"><span></span></span>
+                            <span style="--i:3"><span></span></span>
+                            <span style="--i:4"><span></span></span>
+                            <span style="--i:5"><span></span></span>
+                            <span style="--i:6"><span></span></span>
+                            <span class="liquid-btn__bg"><span></span></span>
+                        </div>
+                        <svg aria-hidden="true" focusable="false">
+                            <filter id="liquid-gooey">
+                                <feGaussianBlur in="SourceGraphic" stdDeviation="10"></feGaussianBlur>
+                                <feColorMatrix values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 20 -10"></feColorMatrix>
+                            </filter>
+                        </svg>
+                    </a>
+                </div>
+
+                <div class="faq__list" role="list">
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-briefcase-alt-2'></i></span>
+                            <span class="faq__q-text">¿Qué experiencia tienes como Full Stack Developer?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Tengo <strong>+2 años</strong> de experiencia construyendo aplicaciones Full Stack,
+                                actualmente como Desarrollador en <strong>BGITAL</strong> y previamente como Ingeniero
+                                en Sistemas en el IDP (Instituto de la Defensoría Pública). He liderado proyectos
+                                escalables con <strong>React, Laravel, Firebase y Python</strong>, con resultados
+                                medibles como 80% de mejora en tiempos operativos y migración de +50,000 registros.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-code-block'></i></span>
+                            <span class="faq__q-text">¿Cuáles son tus principales tecnologías?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>En <strong>backend</strong>: PHP/Laravel, Python, Node, MySQL/PostgreSQL, Firebase y REST
+                                APIs. En <strong>frontend</strong>: React, JavaScript ES6+, HTML5/CSS3, Tailwind,
+                                Bootstrap y PWAs. Y en <strong>IA / herramientas</strong>: Claude, Gemini, Prompt
+                                Engineering, Google Cloud, Git/GitHub y Docker. Revisa la sección <a
+                                    href="#skills">Habilidades</a> para más detalles.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bxs-graduation'></i></span>
+                            <span class="faq__q-text">¿Cuál es tu formación académica?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Soy <strong>Ingeniero en Sistemas</strong> egresado con tesis sobre clasificación de
+                                residuos con IA y Arduino (STMU-IA). Complemento con +15 certificaciones de
+                                <strong>Santander, Google Cloud, IBM, Cisco, Oracle, Scrimba y Coursera</strong> en IA
+                                generativa, Machine Learning, Python, Data Science y bases de datos. Todos los
+                                certificados se pueden visualizar arriba.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-bot'></i></span>
+                            <span class="faq__q-text">¿Trabajas con Inteligencia Artificial?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Sí. Integro <strong>IA generativa</strong> (Claude, Gemini, GPT) en flujos de trabajo,
+                                automatizaciones y aplicaciones reales. Ejemplos: análisis predictivo financiero en Fin
+                                Flow, clasificación con YOLOv5/PyTorch en STMU-IA, migración masiva de datos con scripts
+                                Python y desarrollo de prompts para empresas.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-globe'></i></span>
+                            <span class="faq__q-text">¿Aceptas proyectos remotos o internacionales?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Totalmente. Resido en <strong>Toluca, México</strong>, pero trabajo con clientes de
+                                todo Latinoamérica, EE.UU. y Europa de forma 100% remota. Manejo horarios flexibles y me
+                                adapto a tu zona. Comunicación vía WhatsApp, Email, Slack, Discord o la plataforma que
+                                prefieras.</p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-dollar-circle'></i></span>
+                            <span class="faq__q-text">¿Cómo manejas precios y tiempos de entrega?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Cada proyecto se cotiza con base en alcance, complejidad y plazos. Ofrezco modalidades
+                                <strong>por hora, por proyecto cerrado o iguala mensual</strong>. Entrego prototipos
+                                funcionales en 1–3 semanas según el caso (como el ERP en 3 semanas para BGITAL).
+                                Solicita una cotización gratuita por WhatsApp o el formulario de contacto.
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-file'></i></span>
+                            <span class="faq__q-text">¿Puedo descargar tu CV?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Claro. Mi CV está disponible en PDF actualizado al 2026.
+                                <a download href="assets/pdf/Alvaro_Aldama_Ingeniero_Sistemas.pdf"
+                                    class="faq__a-cta"><i class='bx bx-download' aria-hidden="true"></i>
+                                    Descargar CV</a>
+                            </p>
+                        </div>
+                    </details>
+
+                    <details class="faq__item" role="listitem">
+                        <summary class="faq__q">
+                            <span class="faq__q-icon" aria-hidden="true"><i class='bx bx-lock-alt'></i></span>
+                            <span class="faq__q-text">¿Por qué algunos proyectos están marcados como privados?</span>
+                            <span class="faq__q-toggle" aria-hidden="true"></span>
+                        </summary>
+                        <div class="faq__a">
+                            <p>Algunos sistemas que he desarrollado son para empresas (BGITAL, IDP) y por
+                                <strong>NDA y confidencialidad</strong> no puedo compartir el código fuente ni una demo
+                                pública. Sin embargo, puedo mostrar capturas, hablar de la arquitectura y agendar una
+                                <strong>demo privada</strong> bajo solicitud. Todos los proyectos con etiqueta "Ver
+                                demo" son 100% públicos.
+                            </p>
+                        </div>
+                    </details>
+
+                </div>
             </div>
         </section>
 
         <!-- ===================== CONTACT ===================== -->
         <section class="contact section" id="contact">
             <div class="section__hd">
-                <span class="section__tag">// 07</span>
+                <span class="section__tag">// 08</span>
                 <h2 class="section__title">Hablemos</h2>
                 <div class="section__line"></div>
             </div>
@@ -969,18 +1277,19 @@
                 <span class="footer__logo"><span>&lt;</span>Code69<span> /&gt;</span></span>
                 <p>Full Stack Developer & Ingeniero en Sistemas</p>
             </div>
-            <nav class="footer__nav">
+            <nav class="footer__nav" aria-label="Navegación pie de página">
                 <a href="#about">Sobre mí</a>
                 <a href="#experience">Experiencia</a>
                 <a href="#work">Proyectos</a>
                 <a href="#certificates">Certificados</a>
+                <a href="#faq">FAQ</a>
             </nav>
             <div class="footer__socials">
-                <a href="https://github.com/Alvaro6ix" target="_blank" aria-label="GitHub"><i
-                        class='bx bxl-github'></i></a>
-                <a href="mailto:alvaro69aldama@gmail.com" aria-label="Email"><i class='bx bxl-gmail'></i></a>
-                <a href="https://wa.me/527227453989" target="_blank" aria-label="WhatsApp"><i
-                        class='bx bxl-whatsapp'></i></a>
+                <a href="https://github.com/Alvaro6ix" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i
+                        class='bx bxl-github' aria-hidden="true"></i></a>
+                <a href="mailto:alvaro69aldama@gmail.com" aria-label="Email"><i class='bx bxl-gmail' aria-hidden="true"></i></a>
+                <a href="https://wa.me/527227453989" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><i
+                        class='bx bxl-whatsapp' aria-hidden="true"></i></a>
             </div>
             <span class="footer__copy">&copy; <span id="yr">2026</span> Alvaro Aldama — Todos los derechos
                 reservados.</span>

@@ -479,14 +479,17 @@ body.light-theme .nav__menu {
   opacity: 1;
 }
 
-.theme-btn {
+/* Legacy .theme-btn rules now scoped to non-polygon variant */
+.theme-btn:not(.theme-btn--polygon) {
   font-size: 1.2rem;
   color: var(--text-dim);
   cursor: pointer;
+  background: transparent;
+  border: none;
   transition: color .3s, transform .4s;
 }
 
-.theme-btn:hover {
+.theme-btn:not(.theme-btn--polygon):hover {
   color: var(--green);
   transform: rotate(180deg);
 }
@@ -2279,10 +2282,38 @@ body.light-theme .back-top {
   transition: transform .3s cubic-bezier(.23, 1, .32, 1);
 }
 
-/* ====== GSAP REVEAL INITIAL STATE ====== */
+/* ====== REVEAL — safe initial state (fallback if JS fails, items stay visible) ====== */
 [data-reveal] {
   opacity: 0;
   transform: translateY(30px);
+}
+
+/* Cards: safe initial state - they animate via .is-revealed class added by IntersectionObserver.
+   If JS fails for any reason, fallback makes them visible after 1.2s. */
+.work__card,
+.cert-card,
+.faq__item {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .7s cubic-bezier(.23, 1, .32, 1), transform .7s cubic-bezier(.23, 1, .32, 1);
+}
+
+.work__card.is-revealed,
+.cert-card.is-revealed,
+.faq__item.is-revealed,
+html.no-js .work__card,
+html.no-js .cert-card,
+html.no-js .faq__item {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Hard fallback: forces visibility if .is-revealed never fires (mobile/iOS quirks) */
+body.fallback-show .work__card,
+body.fallback-show .cert-card,
+body.fallback-show .faq__item {
+  opacity: 1 !important;
+  transform: none !important;
 }
 
 /* ====== MIXITUP ====== */
@@ -2367,5 +2398,1942 @@ body.light-theme .back-top {
     top: auto !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
+  }
+}
+
+/* ============================================================
+   ============ NEW: ACCESSIBILITY ENHANCEMENTS ===============
+   ============================================================ */
+
+/* Skip link */
+.skip-link {
+  position: fixed;
+  top: -60px;
+  left: 1rem;
+  z-index: 10000;
+  background: var(--green);
+  color: var(--bg);
+  padding: .65rem 1.2rem;
+  border-radius: var(--r-sm);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  transition: top .25s cubic-bezier(.23, 1, .32, 1);
+  text-decoration: none;
+  box-shadow: 0 4px 24px var(--green-glow);
+}
+
+.skip-link:focus {
+  top: 1rem;
+  outline: 2px solid var(--green-light);
+  outline-offset: 3px;
+}
+
+/* Universal focus-visible — works for keyboard nav */
+*:focus {
+  outline: none;
+}
+
+*:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Buttons & links: stronger ring */
+button:focus-visible,
+a:focus-visible,
+.btn:focus-visible,
+.nav__link:focus-visible,
+.filter-btn:focus-visible,
+.theme-btn:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--green-light);
+  outline-offset: 4px;
+  box-shadow: 0 0 0 4px var(--green-dim);
+}
+
+/* Section hint (under headers) */
+.section__hint {
+  margin-top: .85rem;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  font-family: var(--font-mono);
+  max-width: 520px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 1.5;
+}
+
+.section__hint strong {
+  color: var(--green);
+  font-weight: 500;
+}
+
+/* ============================================================
+   ========= NEW: POLYGON THEME TOGGLE (Uiverse-style) =========
+   ============================================================ */
+
+.theme-btn--polygon {
+  --tb-size: 38px;
+  width: var(--tb-size);
+  height: var(--tb-size);
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--surface), var(--surface2));
+  border: 1px solid var(--border);
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  isolation: isolate;
+  transition: border-color .35s ease, box-shadow .35s ease, transform .35s cubic-bezier(.23, 1, .32, 1);
+}
+
+.theme-btn--polygon::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg,
+      var(--green) 0deg,
+      var(--green-light) 90deg,
+      transparent 180deg,
+      var(--green-alt) 270deg,
+      var(--green) 360deg);
+  opacity: 0;
+  z-index: -1;
+  animation: tb-spin 4s linear infinite;
+  transition: opacity .35s;
+}
+
+.theme-btn--polygon:hover {
+  border-color: transparent;
+  box-shadow: 0 0 24px var(--green-glow);
+  transform: rotate(-12deg) scale(1.08);
+}
+
+.theme-btn--polygon:hover::before {
+  opacity: .7;
+}
+
+@keyframes tb-spin {
+  to {
+    transform: rotate(1turn);
+  }
+}
+
+.theme-btn__svg {
+  width: 22px;
+  height: 22px;
+  fill: none;
+  stroke: var(--text);
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: stroke .35s, transform .6s cubic-bezier(.5, 1.6, .4, .9);
+}
+
+.theme-btn--polygon:hover .theme-btn__svg {
+  stroke: var(--green);
+}
+
+/* Sun visible by default (dark mode) - moon hidden */
+.theme-btn__sun {
+  transform-origin: center;
+  transition: transform .55s cubic-bezier(.5, 1.6, .4, .9), opacity .35s;
+  opacity: 0;
+  transform: scale(.4) rotate(-90deg);
+}
+
+.theme-btn__moon {
+  transform-origin: center;
+  transition: transform .55s cubic-bezier(.5, 1.6, .4, .9), opacity .35s;
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  fill: var(--text);
+  stroke: none;
+}
+
+.theme-btn--polygon:hover .theme-btn__moon {
+  fill: var(--green);
+}
+
+.theme-btn__rays line {
+  transform-origin: center;
+  transition: transform .35s, opacity .35s;
+}
+
+/* Light theme: show sun, hide moon */
+body.light-theme .theme-btn__moon {
+  opacity: 0;
+  transform: scale(.4) rotate(90deg);
+}
+
+body.light-theme .theme-btn__sun {
+  opacity: 1;
+  transform: scale(1) rotate(0deg);
+  fill: var(--green);
+  stroke: var(--green);
+}
+
+body.light-theme .theme-btn--polygon:hover .theme-btn__svg {
+  stroke: var(--green-light);
+}
+
+/* View Transitions API — Polygon clip-path animation (rdsx.dev/polygon) */
+::view-transition-group(root) {
+  animation-duration: .7s;
+  animation-timing-function: cubic-bezier(.16, 1, .3, 1);
+}
+
+::view-transition-new(root) {
+  animation-name: reveal-polygon-light;
+  animation-fill-mode: both;
+}
+
+::view-transition-old(root),
+.dark::view-transition-old(root) {
+  animation: none;
+  animation-fill-mode: both;
+  z-index: -1;
+}
+
+.dark::view-transition-new(root) {
+  animation-name: reveal-polygon-dark;
+  animation-fill-mode: both;
+}
+
+@keyframes reveal-polygon-dark {
+  from {
+    clip-path: polygon(50% -71%, -50% 71%, -50% 71%, 50% -71%);
+  }
+
+  to {
+    clip-path: polygon(50% -71%, -50% 71%, 50% 171%, 171% 50%);
+  }
+}
+
+@keyframes reveal-polygon-light {
+  from {
+    clip-path: polygon(171% 50%, 50% 171%, 50% 171%, 171% 50%);
+  }
+
+  to {
+    clip-path: polygon(171% 50%, 50% 171%, -50% 71%, 50% -71%);
+  }
+}
+
+/* Toggle press animation */
+.theme-btn--polygon:active {
+  transform: scale(.92);
+}
+
+/* ============================================================
+   ============== NEW: FAQ SECTION (Modern 3D) ================
+   ============================================================ */
+
+.faq__container {
+  max-width: 880px;
+  margin: 0 auto;
+  display: grid;
+  gap: 2.5rem;
+}
+
+.faq__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: .85rem;
+  padding: 2rem 1.5rem;
+  background: linear-gradient(135deg,
+      hsla(142, 76%, 36%, .08),
+      hsla(142, 76%, 36%, .02) 40%,
+      transparent 80%);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  position: relative;
+  overflow: hidden;
+}
+
+.faq__intro::before {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--r-lg);
+  padding: 1px;
+  background: linear-gradient(135deg, var(--green) 0%, transparent 50%, var(--green-light) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: .35;
+  pointer-events: none;
+}
+
+.faq__icon-wrap {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--green-dim);
+  border: 1px solid hsla(142, 76%, 36%, .35);
+  color: var(--green);
+  font-size: 1.8rem;
+  box-shadow: 0 0 30px var(--green-glow), inset 0 0 20px hsla(142, 76%, 36%, .12);
+  animation: faq-pulse 3s ease-in-out infinite;
+}
+
+@keyframes faq-pulse {
+
+  0%,
+  100% {
+    box-shadow: 0 0 24px var(--green-glow), inset 0 0 18px hsla(142, 76%, 36%, .12);
+  }
+
+  50% {
+    box-shadow: 0 0 40px var(--green-glow), inset 0 0 24px hsla(142, 76%, 36%, .2);
+  }
+}
+
+.faq__intro-title {
+  font-family: var(--font-head);
+  font-size: var(--fs-lg);
+  font-weight: 700;
+  color: var(--title);
+  line-height: 1.2;
+  max-width: 30ch;
+}
+
+.faq__intro-desc {
+  font-size: var(--fs-base);
+  color: var(--text);
+  line-height: 1.65;
+  max-width: 55ch;
+}
+
+.faq__intro-link {
+  color: var(--green);
+  font-weight: 500;
+  border-bottom: 1px dashed currentColor;
+  transition: color .3s, border-color .3s;
+}
+
+.faq__intro-link:hover {
+  color: var(--green-light);
+}
+
+.faq__list {
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+
+.faq__item {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  overflow: hidden;
+  position: relative;
+  transition: border-color .3s, box-shadow .35s, transform .35s;
+  /* Initial state - reveal handled at top of CSS */
+}
+
+.faq__item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--green), var(--green-light));
+  transform: scaleY(0);
+  transform-origin: top;
+  transition: transform .4s cubic-bezier(.23, 1, .32, 1);
+}
+
+.faq__item:hover {
+  border-color: var(--border-hover);
+  box-shadow: 0 12px 30px var(--shadow);
+}
+
+.faq__item[open] {
+  border-color: var(--border-hover);
+  box-shadow: 0 14px 35px var(--shadow), 0 0 0 1px hsla(142, 76%, 36%, .12);
+}
+
+.faq__item[open]::before {
+  transform: scaleY(1);
+}
+
+.faq__q {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: 1.1rem 1.25rem;
+  cursor: pointer;
+  user-select: none;
+  list-style: none;
+  font-family: var(--font-head);
+  font-size: var(--fs-base);
+  font-weight: 600;
+  color: var(--title);
+  position: relative;
+  transition: background .3s, padding-left .35s;
+}
+
+.faq__item[open] .faq__q {
+  padding-left: 1.5rem;
+}
+
+/* Remove default summary marker */
+.faq__q::-webkit-details-marker {
+  display: none;
+}
+
+.faq__q::marker {
+  content: '';
+}
+
+.faq__q:hover {
+  background: hsla(142, 76%, 36%, .04);
+}
+
+.faq__q-icon {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: var(--r-sm);
+  background: var(--green-dim);
+  border: 1px solid hsla(142, 76%, 36%, .2);
+  color: var(--green);
+  font-size: 1.15rem;
+  flex-shrink: 0;
+  transition: transform .4s cubic-bezier(.23, 1, .32, 1), background .3s;
+}
+
+.faq__item[open] .faq__q-icon {
+  transform: rotate(360deg) scale(1.08);
+  background: var(--green);
+  color: var(--bg);
+}
+
+body.light-theme .faq__item[open] .faq__q-icon {
+  color: #fff;
+}
+
+.faq__q-text {
+  flex: 1;
+  line-height: 1.4;
+}
+
+.faq__q-toggle {
+  width: 28px;
+  height: 28px;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.faq__q-toggle::before,
+.faq__q-toggle::after {
+  content: '';
+  position: absolute;
+  background: var(--green);
+  border-radius: 2px;
+  transition: transform .4s cubic-bezier(.5, 1.6, .4, .9), opacity .3s;
+}
+
+.faq__q-toggle::before {
+  left: 50%;
+  top: 50%;
+  width: 14px;
+  height: 2px;
+  transform: translate(-50%, -50%);
+}
+
+.faq__q-toggle::after {
+  left: 50%;
+  top: 50%;
+  width: 2px;
+  height: 14px;
+  transform: translate(-50%, -50%);
+}
+
+.faq__item[open] .faq__q-toggle::after {
+  transform: translate(-50%, -50%) rotate(90deg);
+  opacity: 0;
+}
+
+.faq__item[open] .faq__q-toggle::before {
+  transform: translate(-50%, -50%) rotate(180deg);
+}
+
+.faq__a {
+  padding: 0 1.25rem 1.2rem 4.15rem;
+  font-size: var(--fs-sm);
+  color: var(--text);
+  line-height: 1.7;
+  animation: faq-open .45s cubic-bezier(.16, 1, .3, 1);
+}
+
+@keyframes faq-open {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.faq__a strong {
+  color: var(--green-alt);
+  font-weight: 500;
+}
+
+.faq__a a {
+  color: var(--green);
+  border-bottom: 1px dashed currentColor;
+  transition: color .25s;
+}
+
+.faq__a a:hover {
+  color: var(--green-light);
+}
+
+.faq__a-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: .35rem;
+  margin-top: .65rem;
+  padding: .45rem .95rem;
+  background: var(--green-dim);
+  border: 1px solid hsla(142, 76%, 36%, .35);
+  border-radius: var(--r-sm);
+  color: var(--green) !important;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: 500;
+  border-bottom: 1px solid hsla(142, 76%, 36%, .35) !important;
+  transition: all .3s;
+}
+
+.faq__a-cta:hover {
+  background: var(--green);
+  color: var(--bg) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px var(--green-glow);
+}
+
+body.light-theme .faq__a-cta:hover {
+  color: #fff !important;
+}
+
+@media (max-width: 560px) {
+  .faq__a {
+    padding-left: 1.25rem;
+  }
+
+  .faq__q {
+    gap: .65rem;
+    padding: .95rem 1rem;
+    font-size: var(--fs-sm);
+  }
+
+  .faq__q-icon {
+    width: 30px;
+    height: 30px;
+    font-size: 1rem;
+  }
+}
+
+/* ============================================================
+   ============ NEW: UIVERSE-INSPIRED COMPONENTS ===============
+   ============================================================ */
+
+/* Enhanced solid button (gradient border + sweeping highlight) */
+.btn--solid {
+  background: linear-gradient(135deg, var(--green) 0%, var(--green-alt) 100%);
+  position: relative;
+  isolation: isolate;
+}
+
+.btn--solid::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(120deg, transparent 30%, hsla(0, 0%, 100%, .25) 50%, transparent 70%);
+  transform: translateX(-150%);
+  transition: transform .8s cubic-bezier(.23, 1, .32, 1);
+  pointer-events: none;
+}
+
+.btn--solid:hover::after {
+  transform: translateX(150%);
+}
+
+/* Filter button micro-glow */
+.filter-btn {
+  position: relative;
+  overflow: hidden;
+}
+
+.filter-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: var(--green-dim);
+  transform: translate(-50%, -50%);
+  transition: width .5s, height .5s;
+  z-index: -1;
+}
+
+.filter-btn:hover::before {
+  width: 200%;
+  height: 200%;
+}
+
+/* Cert card — 3D flip-tilt feel + animated border gradient on hover */
+.cert-card {
+  isolation: isolate;
+}
+
+.cert-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--r-lg);
+  padding: 1px;
+  background: conic-gradient(from var(--ang, 90deg),
+      transparent 0deg,
+      var(--green) 70deg,
+      var(--green-light) 120deg,
+      transparent 200deg,
+      transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .4s;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cert-card:hover::after {
+  opacity: 1;
+  animation: ang-spin 3s linear infinite;
+}
+
+@property --ang {
+  syntax: '<angle>';
+  initial-value: 90deg;
+  inherits: false;
+}
+
+@keyframes ang-spin {
+  to {
+    --ang: 450deg;
+  }
+}
+
+/* Cert "Ver" button: improved (uiverse-style glow + lift) */
+.cert-card__btn {
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.cert-card__btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 35%, hsla(142, 76%, 56%, .35) 50%, transparent 65%);
+  transform: translateX(-150%);
+  transition: transform .7s cubic-bezier(.23, 1, .32, 1);
+  z-index: 0;
+}
+
+.cert-card__btn:hover::before {
+  transform: translateX(150%);
+}
+
+.cert-card__btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px var(--green-glow);
+}
+
+/* Cert badge: small year chip animation */
+.cert-card__yr {
+  display: inline-block;
+  padding: .12rem .55rem;
+  background: hsla(142, 76%, 36%, .12);
+  border: 1px solid hsla(142, 76%, 36%, .25);
+  border-radius: var(--r-full);
+  width: fit-content;
+}
+
+/* Service card — enhanced with rotating border gradient on hover */
+.service-card {
+  isolation: isolate;
+}
+
+.service-card::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  border-radius: var(--r-md);
+  padding: 1px;
+  background: linear-gradient(135deg,
+      hsla(142, 76%, 36%, 0) 0%,
+      hsla(142, 76%, 36%, .6) 50%,
+      hsla(142, 76%, 36%, 0) 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity .4s;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.service-card:hover::after {
+  opacity: 1;
+}
+
+/* Work card -- modern shimmer overlay on image */
+.work__img-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 0%, hsla(142, 76%, 56%, .12) 50%, transparent 100%);
+  transform: translateX(-100%);
+  transition: transform .9s cubic-bezier(.23, 1, .32, 1);
+  pointer-events: none;
+}
+
+.work__card:hover .work__img-wrap::after {
+  transform: translateX(100%);
+}
+
+/* New 3D-feel hover for work cards (rotate slight + lift) */
+.work__card:hover {
+  transform: translateY(-6px) perspective(800px) rotateX(2deg);
+}
+
+/* "Ver demo" link: nicer arrow-slide */
+.work__ext-link {
+  padding: .25rem .55rem;
+  border-radius: var(--r-sm);
+  background: hsla(142, 76%, 36%, .08);
+  border: 1px solid hsla(142, 76%, 36%, .2);
+  transition: background .3s, transform .3s, gap .25s;
+}
+
+.work__ext-link:hover {
+  background: hsla(142, 76%, 36%, .18);
+  transform: translateX(2px);
+  gap: .55rem;
+}
+
+/* ============================================================
+   ============== NEW: REDUCED MOTION & A11Y =================
+   ============================================================ */
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .cursor,
+  .cursor-ring {
+    display: none !important;
+  }
+
+  ::view-transition-group(root),
+  ::view-transition-new(root),
+  ::view-transition-old(root) {
+    animation: none !important;
+  }
+
+  .hero__ring,
+  .hero__photo,
+  .hero__scan-line,
+  .about__img-frame,
+  .float-tag,
+  .scroll__dot,
+  .scroll__hint,
+  .status__dot::after,
+  .tl__dot-core::after,
+  .faq__icon-wrap {
+    animation: none !important;
+  }
+
+  /* Ensure cards are visible even if no animation */
+  .work__card,
+  .cert-card,
+  .faq__item {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Light theme refinements for new components */
+body.light-theme .faq__item {
+  background: hsla(0, 0%, 100%, .85);
+}
+
+body.light-theme .faq__intro {
+  background: linear-gradient(135deg,
+      hsla(142, 76%, 36%, .12),
+      hsla(142, 76%, 36%, .03) 40%,
+      transparent 80%);
+}
+
+body.light-theme .theme-btn--polygon {
+  background: linear-gradient(135deg, hsl(210, 20%, 97%), hsl(210, 15%, 92%));
+}
+
+body.light-theme .work__ext-link {
+  background: hsla(142, 76%, 36%, .12);
+}
+
+/* ============================================================
+   ============== NEW: SUBTLE GLOBAL POLISH ==================
+   ============================================================ */
+
+/* Smooth font rendering */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Better image rendering */
+img {
+  -webkit-user-drag: none;
+  user-select: none;
+}
+
+/* Custom selection color */
+::selection {
+  background: var(--green);
+  color: var(--bg);
+}
+
+body.light-theme ::selection {
+  color: #fff;
+}
+
+/* Loading state for theme button (during view transition) */
+.theme-btn--polygon.is-transitioning {
+  pointer-events: none;
+}
+
+/* ============================================================
+   ============ NEW: UIVERSE COMPONENTS (GREEN-RECOLOR) =======
+   ============================================================ */
+
+/* Visually-hidden helper for a11y labels */
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* ============================================================
+   1. BUBBLES LOADER (jeremy_4982/massive-falcon-52)
+   Original: pink/purple/blue/green bubbles → all green palette
+   ============================================================ */
+
+.bubbles-wrap {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  margin: 0 auto .25rem;
+  pointer-events: none;
+}
+
+.bubbles-loader {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.bubbles-loader__strich-1,
+.bubbles-loader__strich-2 {
+  position: absolute;
+  width: 64px;
+  height: 22px;
+  background: linear-gradient(135deg, var(--surface2), var(--surface));
+  border: 1px solid hsla(142, 76%, 36%, .3);
+  border-radius: 25px;
+  box-shadow:
+    0 3px 10px rgba(0, 0, 0, .35),
+    inset 0 0 10px hsla(142, 76%, 36%, .15);
+  top: 50%;
+  left: 50%;
+  margin-top: -11px;
+  margin-left: -32px;
+  z-index: 0;
+}
+
+.bubbles-loader__strich-1 {
+  transform: rotate(45deg);
+}
+
+.bubbles-loader__strich-2 {
+  transform: rotate(-45deg);
+}
+
+.bubble {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  margin-top: -6px;
+  margin-left: -6px;
+  border-radius: 50%;
+  z-index: 2;
+}
+
+.bubble--a {
+  background: radial-gradient(circle at 30% 30%, hsl(142, 90%, 75%), var(--green), hsl(142, 60%, 30%));
+  box-shadow: 0 0 10px hsla(142, 76%, 56%, .55);
+  animation: bubble-drop 5s ease-in-out infinite;
+}
+
+.bubble--b {
+  background: radial-gradient(circle at 30% 30%, hsl(160, 80%, 70%), var(--green-alt), hsl(160, 60%, 35%));
+  box-shadow: 0 0 9px hsla(160, 76%, 50%, .5);
+  animation: bubble-drop 6s ease-in-out infinite -.8s;
+}
+
+.bubble--c {
+  background: radial-gradient(circle at 30% 30%, hsl(130, 80%, 70%), var(--green-light), hsl(130, 65%, 35%));
+  box-shadow: 0 0 9px hsla(130, 76%, 50%, .5);
+  animation: bubble-drop 4s ease-in-out infinite -1.6s;
+}
+
+.bubble--d {
+  background: radial-gradient(circle at 30% 30%, hsl(150, 95%, 80%), var(--green-light), hsl(150, 70%, 35%));
+  box-shadow: 0 0 10px hsla(150, 76%, 60%, .55);
+  animation: bubble-drop 7s ease-in-out infinite -2.4s;
+}
+
+@keyframes bubble-drop {
+
+  0%,
+  100% {
+    transform: translate(-22px, 0) scale(1);
+  }
+
+  25% {
+    transform: translate(22px, -18px) scale(1.1);
+  }
+
+  50% {
+    transform: translate(22px, 18px) scale(.9);
+  }
+
+  75% {
+    transform: translate(-22px, 18px) scale(1.05);
+  }
+}
+
+body.light-theme .bubbles-loader__strich-1,
+body.light-theme .bubbles-loader__strich-2 {
+  background: linear-gradient(135deg, hsl(220, 15%, 25%), hsl(220, 12%, 18%));
+}
+
+/* ============================================================
+   2. LIQUID GOOEY BUTTON (fateself/tricky-crab-38)
+   Original: blue → green palette
+   ============================================================ */
+
+.liquid-btn {
+  background-color: transparent;
+  border: none;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: .5rem;
+  text-decoration: none;
+  isolation: isolate;
+  cursor: pointer;
+}
+
+.liquid-btn svg {
+  width: 0;
+  height: 0;
+}
+
+.liquid-btn p {
+  width: 130px;
+  height: 42px;
+  z-index: 9;
+  font-size: .85rem;
+  color: #fff;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-family: var(--font-head);
+  transition: transform .3s ease;
+  text-shadow: 0 0 10px hsla(142, 76%, 46%, .85);
+  letter-spacing: .06em;
+  user-select: none;
+  position: relative;
+}
+
+.liquid-btn p:hover {
+  transform: scale(1.08);
+}
+
+.liquid-btn:active p {
+  transform: scale(.98);
+}
+
+.liquid-btn p:hover+.liquid-btn__liquid span:not(.liquid-btn__bg) {
+  animation-play-state: running;
+}
+
+.liquid-btn__liquid {
+  filter: url(#liquid-gooey);
+  width: 130px;
+  height: 150px;
+  position: absolute;
+  inset: 0;
+}
+
+.liquid-btn__liquid>span {
+  position: absolute;
+  top: 1px;
+  left: -35px;
+  width: 100%;
+  height: 100%;
+  display: block;
+  animation: liquid-rotate 2.5s ease infinite;
+  animation-delay: calc(.15s * var(--i));
+  animation-play-state: paused;
+}
+
+.liquid-btn__liquid>span>span {
+  animation: liquid-move 6s ease-in-out infinite;
+  animation-delay: calc(.2s * var(--i));
+  background: var(--green-alt);
+  width: 38px;
+  height: 38px;
+  display: block;
+  margin: auto;
+  border-radius: 50%;
+}
+
+.liquid-btn__liquid span>span::before {
+  content: "";
+  position: absolute;
+  left: calc(50% - 15px);
+  top: 0;
+  width: 30px;
+  height: 30px;
+  background: linear-gradient(var(--green), var(--green-light));
+  border-radius: 50%;
+  box-shadow: 0 0 24px hsla(142, 76%, 36%, .7);
+}
+
+.liquid-btn__liquid span.liquid-btn__bg {
+  animation: none;
+}
+
+.liquid-btn__liquid span.liquid-btn__bg>span::before {
+  width: 130px;
+  height: 38px;
+  left: calc(50% - 35px);
+  border-radius: 22px;
+}
+
+.liquid-btn__liquid span:nth-child(2) {
+  left: -20px;
+}
+
+.liquid-btn__liquid span:nth-child(1) {
+  left: -40px;
+}
+
+.liquid-btn__liquid span:nth-child(3) {
+  left: -50px;
+}
+
+.liquid-btn__liquid span:nth-child(4) {
+  left: 20px;
+}
+
+.liquid-btn__liquid span:nth-child(7) {
+  left: 40px;
+}
+
+.liquid-btn__liquid span:nth-child(6) {
+  left: 50px;
+}
+
+@keyframes liquid-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  80%,
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes liquid-move {
+
+  0%,
+  100% {
+    transform: translateX(0) translateY(0) scale(1);
+  }
+
+  20% {
+    transform: translateX(-8px) translateY(-4px) scale(1.1);
+  }
+
+  40% {
+    transform: translateX(8px) translateY(8px) scale(.9);
+  }
+
+  60% {
+    transform: translateX(-8px) translateY(4px) scale(1.1);
+  }
+
+  80% {
+    transform: translateX(5px) translateY(-8px) scale(.9);
+  }
+}
+
+@media (pointer: coarse),
+(pointer: none) {
+  .liquid-btn__liquid>span>span {
+    background: transparent;
+  }
+}
+
+/* ============================================================
+   3. LIGHT SWITCH (jetakazono/sour-catfish-79)
+   Original: orange #ff8800 → green palette
+   ============================================================ */
+
+.lightswitch {
+  --ls-ease-elastic: cubic-bezier(.5, 2, .3, .8);
+  --ls-ease-elastic-2: cubic-bezier(.5, -1, .3, .8);
+  --ls-primary: var(--green);
+  --ls-primary-light: var(--green-light);
+  --ls-rounded-max: 100px;
+  --ls-rounded-min: 10px;
+  --ls-h: 56px;
+  --ls-scale: .72;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
+  width: fit-content;
+  margin-bottom: 1.25rem;
+  padding: 6px 0;
+  overflow: visible;
+  transform: scale(var(--ls-scale));
+  transform-origin: left center;
+  /* Compensate the scale so it occupies less visual space */
+  margin-right: calc(-1 * (1 - var(--ls-scale)) * 270px);
+}
+
+.lightswitch__bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  border-radius: 100px;
+}
+
+.lightswitch__bg::before {
+  content: "";
+  border-radius: 50%;
+  position: absolute;
+  right: -25%;
+  top: -25%;
+  width: 50%;
+  height: 50%;
+  background-color: var(--ls-primary);
+  filter: blur(120px);
+  z-index: 1;
+}
+
+.lightswitch__light-1 {
+  position: absolute;
+  right: 20%;
+  top: -35%;
+  height: 70%;
+  width: 8%;
+  border-radius: 0 0 50% 50%;
+  background-color: var(--ls-primary-light);
+  transform: rotate(65deg);
+  filter: blur(80px);
+}
+
+.lightswitch__light-2 {
+  position: absolute;
+  right: 20%;
+  top: -25%;
+  height: 90%;
+  width: 2%;
+  border-radius: 50%;
+  background-color: var(--ls-primary);
+  transform: rotate(50deg);
+  filter: blur(70px);
+}
+
+.lightswitch__light-3 {
+  position: absolute;
+  right: 0%;
+  top: -20%;
+  height: 80%;
+  width: 3%;
+  border-radius: 0 0 50% 50%;
+  background-color: var(--green-light);
+  transform: rotate(35deg);
+  filter: blur(70px);
+}
+
+.lightswitch__area-wrapper {
+  position: relative;
+  padding: 14px 4px;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.lightswitch__wrapper {
+  display: block;
+  border-radius: 100px;
+  position: relative;
+  z-index: 2;
+  transition: all .6s var(--ls-ease-elastic);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.lightswitch__area-wrapper:hover .lightswitch__wrapper {
+  transform: translateY(0) scale(1);
+}
+
+.lightswitch__wrapper input {
+  position: absolute;
+  background: transparent;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+  z-index: 10;
+  cursor: pointer;
+}
+
+.lightswitch__button {
+  background: transparent;
+  display: flex;
+  border: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+
+.lightswitch__button::before {
+  content: "";
+  top: 0;
+  bottom: 0;
+  left: 25%;
+  width: 70%;
+  height: 100%;
+  margin: auto;
+  border-radius: 0 50% 50% 0;
+  position: absolute;
+  pointer-events: none;
+  background: linear-gradient(to right, var(--ls-primary) 0%, transparent 100%);
+  z-index: 1;
+  filter: blur(28px);
+  mix-blend-mode: color-dodge;
+  transition: opacity 1s ease .4s;
+  opacity: 0;
+}
+
+.lightswitch__button::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  top: 0;
+  bottom: 0;
+  left: 28%;
+  margin: auto;
+  border-radius: 50%;
+  position: absolute;
+  pointer-events: none;
+  background: var(--ls-primary);
+  z-index: 2;
+  filter: blur(14px);
+  mix-blend-mode: color-dodge;
+  transition: opacity 1s ease .4s;
+  opacity: 0;
+}
+
+.lightswitch__part-1 {
+  position: relative;
+  z-index: 1;
+  height: var(--ls-h);
+  width: 60px;
+  border-radius: var(--ls-rounded-max) var(--ls-rounded-min) var(--ls-rounded-min) var(--ls-rounded-max);
+}
+
+.lightswitch__line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -1px;
+  transition: opacity .4s ease;
+}
+
+.lightswitch__line::before {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  content: "";
+  width: 1px;
+  background: white;
+  box-shadow: 1px 0 10px 3px var(--green-light);
+  border-radius: 50%;
+  height: 0%;
+  margin: auto;
+  animation: ls-line 1.8s ease infinite;
+}
+
+.lightswitch__screw {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+  z-index: -1;
+  overflow: hidden;
+  padding: 8px 0;
+}
+
+.lightswitch__screw svg {
+  width: auto;
+  height: 44px;
+}
+
+.lightswitch__screw svg g {
+  transform-origin: center;
+}
+
+.lightswitch__dot {
+  color: #8e8c8b;
+}
+
+.lightswitch__case {
+  height: var(--ls-h);
+  width: 60px;
+  border-radius: inherit;
+  transform: translateX(-30px);
+  transition: transform .9s var(--ls-ease-elastic);
+}
+
+.lightswitch__mask {
+  position: absolute;
+  overflow: hidden;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(to bottom, #2c2e31 0%, #31343e 20%, #212329 100%);
+  box-shadow:
+    inset 8px -15px 15px -10px black,
+    inset 10px -17px 12px -12px white,
+    0 22px 50px -5px #111;
+  transition: box-shadow .9s var(--ls-ease-elastic);
+}
+
+.lightswitch__mask::before {
+  content: "";
+  position: absolute;
+  border-radius: inherit;
+  left: 30%;
+  top: 23%;
+  width: 100%;
+  height: 30%;
+  background: white;
+  filter: blur(10px);
+}
+
+.lightswitch__mask::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background-color: rgba(255, 255, 255, .2);
+  mix-blend-mode: overlay;
+}
+
+.lightswitch__area-wrapper:hover .lightswitch__case .lightswitch__mask {
+  box-shadow:
+    inset 8px -15px 15px -10px black,
+    inset 10px -17px 12px -12px white,
+    0 14px 40px -5px #111;
+}
+
+.lightswitch__part-2 {
+  position: relative;
+  height: var(--ls-h);
+  width: 150px;
+  border-radius: var(--ls-rounded-min) var(--ls-rounded-max) var(--ls-rounded-max) var(--ls-rounded-min);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all .6s ease;
+}
+
+.lightswitch__glass {
+  position: relative;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+  transition: all .9s var(--ls-ease-elastic);
+  border-radius: inherit;
+  border-left: 1px solid rgba(0, 0, 0, .3);
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, .15) 0%,
+      rgba(255, 255, 255, .2) 50%,
+      rgba(0, 0, 0, .5) 100%);
+  box-shadow:
+    inset 0 0 7px -4px white,
+    inset 0 -10px 10px -8px rgba(255, 255, 255, .4),
+    inset 8px -15px 15px -10px black,
+    inset 8px -10px 12px -12px white,
+    0 22px 50px -5px #111;
+}
+
+.lightswitch__area-wrapper:hover .lightswitch__glass {
+  box-shadow:
+    inset 0 0 7px -4px white,
+    inset 0 -10px 10px -8px rgba(255, 255, 255, .4),
+    inset 8px -15px 15px -10px black,
+    inset 8px -10px 12px -12px white,
+    0 14px 40px -5px #111;
+}
+
+.lightswitch__glass::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  right: 14%;
+  height: 70%;
+  border-radius: 0 25px 0 0;
+  background: linear-gradient(to bottom,
+      rgba(255, 255, 255, .5) 0%,
+      rgba(255, 255, 255, 0) 60%);
+}
+
+.lightswitch__glass::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 15%;
+  right: 5%;
+  height: 75%;
+  border-radius: 0 30px 30px 0;
+  box-shadow: inset -2px -6px 5px -5px rgba(255, 255, 255, .8);
+  filter: blur(3px);
+}
+
+.lightswitch__glass-reflex {
+  position: absolute;
+  inset: 0;
+  width: 70%;
+  border-radius: 0 50% 50% 0;
+  background: linear-gradient(to right,
+      rgba(255, 255, 255, .03) 0%,
+      rgba(255, 255, 255, .2) 100%);
+  transform: translateX(-115%) skewX(30deg);
+}
+
+.lightswitch__path-glass {
+  position: absolute;
+  inset: 0;
+  transition: opacity .6s linear;
+  opacity: 0;
+}
+
+.lightswitch__path-glass path {
+  stroke-dashoffset: 430;
+  stroke-dasharray: 430 430;
+  animation: ls-path-glass 1.4s ease infinite;
+}
+
+@keyframes ls-path-glass {
+  0% {
+    stroke-dasharray: 430 430;
+    color: var(--green-light);
+    opacity: 1;
+    filter: blur(2px);
+  }
+
+  50% {
+    stroke-dasharray: 860 430;
+    opacity: 1;
+    filter: blur(4px);
+  }
+
+  100% {
+    stroke-dasharray: 860 430;
+    color: var(--ls-primary);
+    opacity: 0;
+  }
+}
+
+.lightswitch__filament {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  width: auto;
+  height: 22px;
+  stroke-width: 2px;
+  opacity: .3;
+}
+
+.lightswitch__filament path {
+  transition: all .6s ease-in-out;
+}
+
+.lightswitch__filament-on {
+  opacity: 1;
+}
+
+.lightswitch__filament-on path {
+  stroke-dashoffset: 100;
+  stroke-dasharray: 100 100;
+}
+
+.lightswitch__filament-blur {
+  opacity: 1;
+  filter: blur(7px);
+  color: var(--green-light);
+  stroke-width: 9px;
+}
+
+/* SIMPLE TEXT LABEL (replaces the fragile per-letter animation system) */
+.lightswitch__label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.lightswitch__label-on,
+.lightswitch__label-off {
+  position: absolute;
+  font-family: var(--font-head), sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: .04em;
+  color: #ffffff;
+  white-space: nowrap;
+  text-shadow:
+    0 1px 3px rgba(0, 0, 0, .9),
+    0 0 8px rgba(0, 0, 0, .7),
+    0 0 12px hsla(142, 76%, 56%, .55);
+  transition: opacity .35s ease, transform .35s ease;
+}
+
+/* Hidden by default — only show the one matching the checkbox state */
+.lightswitch__label-on {
+  opacity: 0;
+  transform: translateY(4px);
+}
+
+.lightswitch__label-off {
+  opacity: 0;
+  transform: translateY(-4px);
+}
+
+.lightswitch__area-wrapper input:checked~.lightswitch__button .lightswitch__label-on {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lightswitch__area-wrapper input:not(:checked)~.lightswitch__button .lightswitch__label-off {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* State logic: when "Disponible" (checked) we show state-2, when "Ocupado" we show state-1 */
+.lightswitch__area-wrapper input:checked~.lightswitch__button .lightswitch__filament path {
+  transition-delay: .6s;
+}
+
+.lightswitch__area-wrapper:hover input:checked~.lightswitch__button .lightswitch__filament path {
+  stroke-dasharray: 100 0;
+}
+
+.lightswitch__area-wrapper input:checked~.lightswitch__button .lightswitch__part-1 .lightswitch__case {
+  transform: translateX(0);
+  transition: transform 1.25s var(--ls-ease-elastic-2);
+}
+
+.lightswitch__area-wrapper:hover input:checked~.lightswitch__button::before,
+.lightswitch__area-wrapper:hover input:checked~.lightswitch__button::after,
+.lightswitch__area-wrapper:hover input:checked~.lightswitch__button .lightswitch__path-glass {
+  opacity: 1;
+}
+
+.lightswitch__area-wrapper:hover .lightswitch__button .lightswitch__part-1 .lightswitch__line {
+  opacity: 0;
+}
+
+.lightswitch__area-wrapper input:not(:checked)~.lightswitch__button .lightswitch__part-1 .lightswitch__line::before {
+  box-shadow: 1px 0 10px 3px rgba(180, 220, 200, .35);
+  background: rgb(140, 140, 140);
+}
+
+.lightswitch__area-wrapper:hover .lightswitch__glass-reflex {
+  animation: ls-reflex .6s ease;
+}
+
+.lightswitch__area-wrapper input:not(:checked)~.lightswitch__button .lightswitch__part-1 .lightswitch__screw g {
+  animation: ls-pulse .8s ease calc(var(--i) * .1s) backwards;
+}
+
+.lightswitch__area-wrapper input:checked~.lightswitch__button .lightswitch__part-1 .lightswitch__screw g {
+  animation: ls-pulse-out .8s ease calc((5 - var(--i)) * .2s) backwards;
+}
+
+.lightswitch__area-wrapper input:not(:checked)~.lightswitch__button .lightswitch__part-1 .lightswitch__screw .lightswitch__dot {
+  animation: ls-dot .7s ease calc(var(--i) * .15s) backwards;
+}
+
+.lightswitch__area-wrapper input:checked~.lightswitch__button .lightswitch__part-1 .lightswitch__screw .lightswitch__dot {
+  animation: ls-dot-out .7s ease calc((3 - var(--i)) * .15s) forwards;
+}
+
+@keyframes ls-line {
+  0% {
+    height: 0%;
+    opacity: 1;
+  }
+
+  50% {
+    height: 100%;
+    opacity: 1;
+  }
+
+  100% {
+    height: 140%;
+    opacity: 0;
+  }
+}
+
+@keyframes ls-dot {
+  30% {
+    color: var(--ls-primary);
+    filter: blur(2px);
+  }
+}
+
+@keyframes ls-dot-out {
+  40% {
+    color: white;
+    filter: blur(2px);
+  }
+}
+
+@keyframes ls-pulse {
+  30% {
+    transform: scaleY(.8);
+  }
+}
+
+@keyframes ls-pulse-out {
+  40% {
+    transform: scaleY(.8);
+  }
+}
+
+@keyframes ls-reflex {
+  0% {
+    transform: translateX(-115%);
+  }
+
+  100% {
+    transform: translateX(140%);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE — UIVERSE COMPONENTS (multi-breakpoint)
+   ============================================================ */
+
+/* Tablet */
+@media (max-width: 768px) {
+  .lightswitch {
+    --ls-scale: .65;
+  }
+
+  .bubbles-wrap {
+    width: 72px;
+    height: 72px;
+  }
+
+  .bubbles-loader {
+    width: 72px;
+    height: 72px;
+  }
+
+  .liquid-btn p {
+    width: 120px;
+    height: 40px;
+    font-size: .8rem;
+  }
+
+  .liquid-btn__liquid {
+    width: 120px;
+    height: 140px;
+  }
+}
+
+/* Mobile L */
+@media (max-width: 560px) {
+  .lightswitch {
+    --ls-scale: .58;
+    margin-bottom: 1rem;
+  }
+
+  .bubbles-wrap {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bubbles-loader {
+    width: 64px;
+    height: 64px;
+  }
+
+  .bubbles-loader__strich-1,
+  .bubbles-loader__strich-2 {
+    width: 52px;
+    height: 18px;
+    margin-left: -26px;
+    margin-top: -9px;
+  }
+
+  .bubble {
+    width: 10px;
+    height: 10px;
+    margin-top: -5px;
+    margin-left: -5px;
+  }
+
+  @keyframes bubble-drop {
+
+    0%,
+    100% {
+      transform: translate(-18px, 0) scale(1);
+    }
+
+    25% {
+      transform: translate(18px, -14px) scale(1.1);
+    }
+
+    50% {
+      transform: translate(18px, 14px) scale(.9);
+    }
+
+    75% {
+      transform: translate(-18px, 14px) scale(1.05);
+    }
+  }
+}
+
+/* Mobile S (320–400px) */
+@media (max-width: 400px) {
+  .lightswitch {
+    --ls-scale: .5;
+  }
+
+  .liquid-btn p {
+    width: 110px;
+    height: 38px;
+    font-size: .75rem;
+  }
+
+  .liquid-btn__liquid {
+    width: 110px;
+    height: 130px;
+  }
+
+  .liquid-btn__liquid span.liquid-btn__bg>span::before {
+    width: 110px;
+    left: calc(50% - 30px);
+  }
+}
+
+/* Wide screens: keep proportions reasonable */
+@media (min-width: 1200px) {
+  .lightswitch {
+    --ls-scale: .78;
+  }
+}
+
+/* FAQ intro — mobile spacing */
+@media (max-width: 560px) {
+  .faq__intro {
+    padding: 1.25rem 1rem;
+    gap: .65rem;
+  }
+
+  .faq__intro-title {
+    font-size: var(--fs-md);
+  }
+
+  .faq__intro-desc {
+    font-size: var(--fs-sm);
+  }
+
+  .faq__container {
+    gap: 1.75rem;
+  }
+}
+
+/* Home — ensure light switch + content stack cleanly on mobile */
+@media (max-width: 560px) {
+
+  /* Slight tweak so lightswitch doesn't add extra horizontal padding */
+  .home__data {
+    overflow: visible;
+  }
+
+  .home__container {
+    gap: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 3rem;
+  }
+
+  .home__subtitle {
+    font-size: var(--fs-xs);
+  }
+}
+
+/* Sibelle SVG / work card images — ensure crisp scaling on retina + mobile */
+.work__img-wrap img[src$=".svg"] {
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Touch devices: enlarge tap targets */
+@media (pointer: coarse) {
+
+  .liquid-btn,
+  .lightswitch__area-wrapper,
+  .faq__q {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .faq__q {
+    min-height: 56px;
+  }
+
+  .filter-btn {
+    min-height: 40px;
+  }
+}
+
+/* Reduced motion: stop all uiverse animations */
+@media (prefers-reduced-motion: reduce) {
+
+  .bubble,
+  .liquid-btn__liquid>span,
+  .liquid-btn__liquid>span>span,
+  .lightswitch__line::before,
+  .lightswitch__path-glass path,
+  .lightswitch__screw g,
+  .lightswitch__dot {
+    animation: none !important;
+  }
+}
+
+/* Print: hide these decorative components */
+@media print {
+
+  .bubbles-wrap,
+  .liquid-btn,
+  .lightswitch {
+    display: none !important;
+  }
+}
+
+/* Print styles (a11y for resume printing) */
+@media print {
+
+  .cursor,
+  .cursor-ring,
+  .scroll-progress,
+  .nav__menu,
+  .header,
+  .back-top,
+  #hero-canvas,
+  .noise-overlay,
+  .loader,
+  .float-tag,
+  .scroll__hint,
+  .home__socials {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .section {
+    page-break-inside: avoid;
   }
 }
