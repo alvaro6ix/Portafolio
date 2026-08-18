@@ -365,7 +365,7 @@ const qsa = (s, p = document) => [...p.querySelectorAll(s)];
     el.textContent = 'Full Stack Dev';
     return;
   }
-  const words = ['Full Stack Dev', 'IA Enthusiast', 'Tech Support', 'Problem Solver', 'PWA Builder'];
+  const words = ['Full Stack Dev', 'IT & Project Manager', 'Automation Dev', 'DevOps & VPS', 'IA Enthusiast', 'Problem Solver', 'PWA Builder'];
   let wi = 0, ci = 0, deleting = false;
 
   function tick() {
@@ -657,6 +657,54 @@ function initHomeAnimations() {
 })();
 
 /* ================================================================
+   17b. PROJECT VIDEO PREVIEWS (.webm)
+   The <video> sits over the poster <img> and only fades in once it
+   really loads, so a missing/failed file just falls back to the image.
+   Desktop: plays on card hover. Touch: plays while on screen.
+   ================================================================ */
+(function initWorkVideos() {
+  const videos = qsa('.work__video');
+  if (!videos.length) return;
+
+  // The clips are heavy, so nothing is downloaded until it's actually wanted:
+  // preload="none" in the markup + these guards.
+  const conn = navigator.connection || {};
+  const saveData = conn.saveData === true;
+  const slowLink = typeof conn.effectiveType === 'string' && conn.effectiveType !== '4g';
+  const canHover = window.matchMedia('(hover: hover)').matches;
+
+  // Reduced motion, data saver or a slow link -> keep the poster image only.
+  if (PREFERS_REDUCED || saveData || slowLink) {
+    videos.forEach(v => v.remove());
+    return;
+  }
+
+  videos.forEach(video => {
+    const card = video.closest('.work__card');
+    const drop = () => video.remove();
+
+    video.addEventListener('loadeddata', () => video.classList.add('is-ready'), { once: true });
+    video.addEventListener('error', drop, { once: true });
+    const source = video.querySelector('source');
+    if (source) source.addEventListener('error', drop, { once: true });
+
+    if (canHover && card) {
+      card.addEventListener('mouseenter', () => { video.play().catch(() => { }); });
+      card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+    } else {
+      // Touch: play while the card is on screen, pause as soon as it leaves.
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) video.play().catch(() => { });
+          else video.pause();
+        });
+      }, { threshold: .5 });
+      io.observe(video);
+    }
+  });
+})();
+
+/* ================================================================
    18. CONTACT FORM (EmailJS)
    ================================================================ */
 (function initContactForm() {
@@ -827,4 +875,4 @@ document.documentElement.classList.add('js');
    ================================================================ */
 console.log('%c< Code69 />', 'color:#1f9346;font-size:22px;font-weight:bold;font-family:monospace;');
 console.log('%c Alvaro Aldama — Full Stack Developer', 'color:#2ecc71;font-size:13px;font-family:monospace;');
-console.log('%c GitHub: https://github.com/Alvaro6ix', 'color:#888;font-size:11px;');
+console.log('%c code69.dev', 'color:#888;font-size:11px;');

@@ -1766,8 +1766,39 @@ body.light-theme .filter-btn.active-filter {
   transform: scale(1.08);
 }
 
+/* Video preview (.webm) — sits over the poster image.
+   Stays hidden until the file actually loads, so a missing
+   video simply falls back to the image underneath. */
+.work__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .45s ease, transform .5s ease;
+}
+
+.work__video.is-ready {
+  opacity: 1;
+}
+
+/* Vertical media (phone mockups): fit the whole frame instead of cropping
+   it to a strip. The opaque background hides whatever sits behind. */
+.work__video--portrait,
+.work__img--portrait {
+  object-fit: contain;
+  background: var(--bg);
+}
+
+.work__card:hover .work__video.is-ready {
+  transform: scale(1.08);
+}
+
 .work__badge {
   position: absolute;
+  z-index: 2;
   top: .75rem;
   right: .75rem;
   background: var(--green);

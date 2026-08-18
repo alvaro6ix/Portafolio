@@ -1,0 +1,16 @@
+# Videos originales sin comprimir (~92 MB). Respaldo local, no se publica.
+assets/video/_originales/
+
+# Recorrido de la boveda de contrasenas: muestra nombres reales del personal,
+# sus usuarios de correo y URLs internas. NO publicar hasta regrabarlo con
+# datos ficticios. Ver assets/video/README.md
+assets/video/vaultsicamet.webm
+
+# Sistema operativo
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Editores
+*.swp
+*~
