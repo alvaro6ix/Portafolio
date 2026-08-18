@@ -552,18 +552,35 @@ function initHomeAnimations() {
 /* ================================================================
    13. VANILLA TILT — 3D card hover
    ================================================================ */
-(function initTilt() {
-  if (typeof VanillaTilt === 'undefined') return;
-  if (PREFERS_REDUCED) return;
-  if (window.innerWidth < 769) return; // skip on mobile (perf)
+const TILT_OPTS = {
+  max: 8,
+  speed: 400,
+  glare: true,
+  'max-glare': .08,
+  scale: 1.02
+};
 
-  VanillaTilt.init(qsa('[data-tilt]'), {
-    max: 8,
-    speed: 400,
-    glare: true,
-    'max-glare': .08,
-    scale: 1.02
+function canTilt() {
+  return typeof VanillaTilt !== 'undefined' && !PREFERS_REDUCED && window.innerWidth >= 769;
+}
+
+// Exposed so the project filter can tear tilt down and rebuild it: vanilla-tilt
+// and MixItUp both write inline `transform` on the same cards, and whichever
+// runs second leaves the other's value stranded.
+function tiltDestroy(elements) {
+  elements.forEach(el => {
+    if (el.vanillaTilt && typeof el.vanillaTilt.destroy === 'function') el.vanillaTilt.destroy();
   });
+}
+
+function tiltInit(elements) {
+  if (!canTilt()) return;
+  VanillaTilt.init(elements, TILT_OPTS);
+}
+
+(function initTilt() {
+  if (!canTilt()) return; // skip on mobile (perf)
+  tiltInit(qsa('[data-tilt]'));
 })();
 
 /* ================================================================
@@ -628,11 +645,44 @@ function initHomeAnimations() {
   const container = qs('#work-grid');
   if (!container) return;
 
+  // Three systems used to write inline `transform` on the same card: MixItUp's
+  // translateY animation, vanilla-tilt's 3D rotation + glare, and the CSS
+  // reveal (translateY(28px) until .is-revealed). Filtering left half-applied
+  // styles behind, so cards froze and their image/video stopped showing.
+  //
+  // Fix has three parts:
+  //   1. MixItUp no longer animates, so it never touches transform at all.
+  //      Cards still fade in through the .is-revealed CSS transition.
+  //   2. Tilt is destroyed before a filter run and rebuilt after, so its
+  //      inline transform and its glare layer are never left stale.
+  //   3. Anything still stranded gets wiped when the operation ends.
+  const cards = () => qsa('.work__card');
+
+  function settleCards() {
+    cards().forEach(card => {
+      card.classList.add('is-revealed');
+      card.style.transform = '';
+      card.style.opacity = '';
+      card.style.willChange = '';
+    });
+    tiltInit(cards().filter(c => c.hasAttribute('data-tilt')));
+
+    // A card filtered out mid-hover would keep its video playing off-screen.
+    qsa('.work__video').forEach(video => {
+      const card = video.closest('.work__card');
+      if (card && getComputedStyle(card).display === 'none') {
+        video.pause();
+        video.currentTime = 0;
+      }
+    });
+  }
+
   let mixer;
   try {
     mixer = mixitup(container, {
       selectors: { target: '.work__card' },
-      animation: { duration: 350, effects: 'fade translateY(20px)', easing: 'ease' }
+      animation: { enable: false },
+      callbacks: { onMixEnd: settleCards }
     });
   } catch (err) {
     console.warn('[Portfolio] MixItUp init failed, filters disabled.', err);
@@ -643,15 +693,14 @@ function initHomeAnimations() {
     btn.addEventListener('click', function () {
       qsa('.filter-btn').forEach(b => b.classList.remove('active-filter'));
       this.classList.add('active-filter');
+      tiltDestroy(cards());
       try {
         mixer.filter(this.dataset.filter === 'all' ? 'all' : this.dataset.filter);
       } catch (err) {
         console.warn('[Portfolio] MixItUp filter error.', err);
       }
-      // Re-reveal cards after filter (in case)
-      setTimeout(() => {
-        qsa('.work__card').forEach(card => card.classList.add('is-revealed'));
-      }, 50);
+      // Safety net in case onMixEnd never fires.
+      setTimeout(settleCards, 120);
     });
   });
 })();

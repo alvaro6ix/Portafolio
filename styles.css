@@ -140,6 +140,333 @@ body.light-theme {
   }
 }
 
+/* ====== AURA GRADIENT "LUNAR SURFACE" (solo modo oscuro) ======
+   Fondo fijo al viewport en vez de alto de pagina: el sitio mide ~15.000px
+   y estirar el degradado a lo largo de todo eso lo aplanaria por completo.
+   Fijandolo, el degradado se comporta como atmosfera detras del scroll.
+   z-index negativo -> queda detras de todo el contenido sin tener que
+   tocar el z-index de header, nav, main ni footer. */
+.aura-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  /* Sin background-color: las capas se mezclan contra el body */
+}
+
+/* Colores base: las mezclas componen contra esto, por eso van en el body
+   y nunca en el contenedor */
+body:not(.light-theme) {
+  background-color: #100e0b;
+}
+
+body.light-theme {
+  background-color: #faf8f2;
+}
+
+.aura-layer {
+  position: absolute;
+  inset: 0;
+  transform: translateZ(0);
+  will-change: transform;
+  pointer-events: none;
+}
+
+/* ---------- Variante A: "Aurora Borealis" (6 capas) ---------- */
+.aura-bg--aurora .aura-layer-1 {
+  background: linear-gradient(154deg, transparent 18%, rgba(12, 72, 61, .06) 29%, rgba(0, 229, 255, .40) 36%, rgb(255, 255, 255) 42%, rgba(73, 207, 158, .32) 48%, rgba(38, 158, 119, .22) 55%, rgba(0, 183, 255, .30) 62%, rgba(15, 76, 65, .08) 68%, transparent 82%);
+  mix-blend-mode: screen;
+  filter: blur(85px);
+}
+
+.aura-bg--aurora .aura-layer-2 {
+  background: linear-gradient(128deg, transparent 28%, rgba(15, 82, 96, .06) 38%, rgba(0, 183, 255, .35) 43%, rgb(255, 255, 255) 48%, rgba(68, 197, 185, .22) 52%, rgba(0, 229, 255, .25) 57%, rgba(25, 105, 112, .10) 62%, transparent 76%);
+  mix-blend-mode: screen;
+  filter: blur(75px);
+  opacity: .9;
+}
+
+.aura-bg--aurora .aura-layer-3 {
+  background: radial-gradient(ellipse 78% 20% at 51% 53%, rgba(65, 183, 155, .24) 0%, rgba(30, 102, 91, .10) 45%, transparent 82%);
+  mix-blend-mode: screen;
+  filter: blur(70px);
+  opacity: .9;
+}
+
+.aura-bg--aurora .aura-layer-4 {
+  background: radial-gradient(ellipse 48% 9% at 52% 50%, rgba(190, 255, 226, .14) 0%, rgba(91, 195, 163, .06) 45%, transparent 80%);
+  mix-blend-mode: screen;
+  filter: blur(175px);
+}
+
+.aura-bg--aurora .aura-layer-5 {
+  background: linear-gradient(to top, rgba(1, 5, 13, .90) 0%, rgba(2, 7, 16, .58) 28%, rgba(3, 9, 20, .20) 55%, transparent 78%);
+  mix-blend-mode: multiply;
+  filter: blur(80px);
+  opacity: .9;
+}
+
+.aura-bg--aurora .aura-layer-6 {
+  background: radial-gradient(ellipse 50% 28% at 72% 18%, rgba(89, 62, 151, .10) 0%, rgba(57, 44, 100, .04) 45%, transparent 82%);
+  mix-blend-mode: screen;
+  filter: blur(138px);
+  opacity: .7;
+}
+
+@media (min-width: 769px) {
+  .aura-bg--aurora .aura-layer-1 { filter: blur(122px); }
+  .aura-bg--aurora .aura-layer-2 { filter: blur(108px); }
+  .aura-bg--aurora .aura-layer-3 { filter: blur(101px); }
+  .aura-bg--aurora .aura-layer-4 { filter: blur(252px); }
+  .aura-bg--aurora .aura-layer-5 { filter: blur(115px); }
+  .aura-bg--aurora .aura-layer-6 { filter: blur(198px); }
+}
+
+/* ---------- Variante E: "Witch's Brew" (4 capas) ---------- */
+.aura-bg--brew .aura-layer-1 {
+  background: radial-gradient(ellipse 42% 48% at 35% 40%, rgba(132, 204, 22, .85) 0%, transparent 65%);
+  mix-blend-mode: screen;
+  filter: blur(138px);
+}
+
+.aura-bg--brew .aura-layer-2 {
+  background: radial-gradient(ellipse 38% 42% at 70% 50%, rgba(101, 163, 13, .7) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  filter: blur(125px);
+}
+
+.aura-bg--brew .aura-layer-3 {
+  background: radial-gradient(ellipse 28% 32% at 55% 75%, rgba(163, 230, 53, .5) 0%, transparent 55%);
+  mix-blend-mode: screen;
+  filter: blur(113px);
+}
+
+.aura-bg--brew .aura-layer-4 {
+  background: radial-gradient(ellipse 18% 20% at 20% 25%, rgba(190, 242, 100, .35) 0%, transparent 50%);
+  mix-blend-mode: screen;
+  filter: blur(75px);
+}
+
+.aura-bg--brew .aura-layer-5,
+.aura-bg--brew .aura-layer-6,
+.aura-bg--brew .aura-grain {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .aura-bg--brew .aura-layer-1 { filter: blur(198px); }
+  .aura-bg--brew .aura-layer-2 { filter: blur(180px); }
+  .aura-bg--brew .aura-layer-3 { filter: blur(162px); }
+  .aura-bg--brew .aura-layer-4 { filter: blur(108px); }
+}
+
+/* ---------- Variante D: "Neon Sludge" (4 capas) ---------- */
+.aura-bg--sludge .aura-layer-1 {
+  background: radial-gradient(ellipse 42% 48% at 30% 40%, rgba(34, 197, 94, .9) 0%, transparent 65%);
+  mix-blend-mode: screen;
+  filter: blur(50px);
+}
+
+.aura-bg--sludge .aura-layer-2 {
+  background: radial-gradient(ellipse 36% 40% at 70% 50%, rgba(22, 163, 74, .75) 0%, transparent 60%);
+  mix-blend-mode: screen;
+  filter: blur(63px);
+}
+
+.aura-bg--sludge .aura-layer-3 {
+  background: radial-gradient(ellipse 28% 32% at 50% 88%, rgba(74, 222, 128, .55) 0%, transparent 55%);
+  mix-blend-mode: screen;
+  filter: blur(38px);
+}
+
+.aura-bg--sludge .aura-layer-4 {
+  background: radial-gradient(ellipse 18% 20% at 82% 25%, rgba(134, 239, 172, .35) 0%, transparent 50%);
+  mix-blend-mode: screen;
+  filter: blur(95px);
+}
+
+.aura-bg--sludge .aura-layer-5,
+.aura-bg--sludge .aura-layer-6,
+.aura-bg--sludge .aura-grain {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .aura-bg--sludge .aura-layer-1 { filter: blur(72px); }
+  .aura-bg--sludge .aura-layer-2 { filter: blur(90px); }
+  .aura-bg--sludge .aura-layer-3 { filter: blur(54px); }
+  .aura-bg--sludge .aura-layer-4 { filter: blur(137px); }
+}
+
+/* ---------- Variante C: "Crimson Veil" (2 capas) ---------- */
+.aura-bg--crimson .aura-layer-1,
+.aura-bg--crimson .aura-layer-2 {
+  background: linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(220, 38, 38, .9) 40%, rgb(255, 255, 255) 70%, rgb(251, 146, 60) 82%, rgb(250, 204, 21) 100%);
+}
+
+.aura-bg--crimson .aura-layer-1 {
+  mix-blend-mode: hard-light;
+  filter: blur(63px);
+  opacity: .6;
+}
+
+.aura-bg--crimson .aura-layer-2 {
+  mix-blend-mode: soft-light;
+  filter: blur(88px);
+  opacity: .9;
+}
+
+.aura-bg--crimson .aura-layer-3,
+.aura-bg--crimson .aura-layer-4,
+.aura-bg--crimson .aura-layer-5,
+.aura-bg--crimson .aura-layer-6,
+.aura-bg--crimson .aura-grain {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .aura-bg--crimson .aura-layer-1 { filter: blur(90px); }
+  .aura-bg--crimson .aura-layer-2 { filter: blur(126px); }
+}
+
+/* OPCIONAL — atenuar el "crimson".
+   Su degradado pasa por rgb(255,255,255) al 70% y termina en amarillo, asi
+   que la mitad inferior del viewport queda muy clara y ahi el texto claro
+   del sitio no se lee. Descomentar si lo quieres mas tenue. */
+/*
+.aura-bg--crimson {
+  opacity: .45;
+}
+*/
+
+/* ---------- Modo claro: "Frosted Jade" (4 capas) ----------
+   Mayor especificidad que las variantes oscuras, asi que gana sin importar
+   cual lleve el contenedor. Al ser tonos claros sobre #faf8f2 no hace falta
+   tocar los colores de texto: siguen siendo los originales. */
+body.light-theme .aura-layer-1 {
+  background: radial-gradient(circle at 25% 30%, rgba(52, 211, 153, .5) 0%, transparent 50%);
+  mix-blend-mode: normal;
+  filter: blur(200px);
+  opacity: 1;
+  display: block;
+}
+
+body.light-theme .aura-layer-2 {
+  background: radial-gradient(circle at 75% 25%, rgba(16, 185, 129, .4) 0%, transparent 45%);
+  mix-blend-mode: normal;
+  filter: blur(175px);
+  opacity: 1;
+  display: block;
+}
+
+body.light-theme .aura-layer-3 {
+  background: radial-gradient(circle at 50% 80%, rgba(6, 182, 212, .35) 0%, transparent 55%);
+  mix-blend-mode: multiply;
+  filter: blur(200px);
+  opacity: 1;
+  display: block;
+}
+
+body.light-theme .aura-layer-4 {
+  background: radial-gradient(circle at 30% 70%, rgba(209, 250, 229, .5) 0%, transparent 40%);
+  mix-blend-mode: multiply;
+  filter: blur(150px);
+  opacity: 1;
+  display: block;
+}
+
+/* El diseno claro solo usa 4 capas y no lleva grano (categoria mesh) */
+body.light-theme .aura-layer-5,
+body.light-theme .aura-layer-6,
+body.light-theme .aura-grain {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  body.light-theme .aura-layer-1 { filter: blur(260px); }
+  body.light-theme .aura-layer-2 { filter: blur(252px); }
+  body.light-theme .aura-layer-3 { filter: blur(260px); }
+  body.light-theme .aura-layer-4 { filter: blur(216px); }
+}
+
+/* ---------- Variante B: "Lunar Surface" (2 capas) ---------- */
+.aura-bg--lunar .aura-layer-1 {
+  background: linear-gradient(150deg, #090a0c 0%, #27272a 40%, #52525b 68%, #71717a 100%);
+  mix-blend-mode: normal;
+}
+
+.aura-bg--lunar .aura-layer-2 {
+  background: radial-gradient(ellipse 45% 50% at 60% 38%, rgba(212, 212, 216, .18) 0%, transparent 68%);
+  mix-blend-mode: screen;
+  filter: blur(113px);
+}
+
+.aura-bg--lunar .aura-layer-3,
+.aura-bg--lunar .aura-layer-4,
+.aura-bg--lunar .aura-layer-5,
+.aura-bg--lunar .aura-layer-6 {
+  display: none;
+}
+
+@media (min-width: 769px) {
+  .aura-bg--lunar .aura-layer-2 { filter: blur(162px); }
+}
+
+/* Grano de pelicula: vive dentro del contenedor, asi que solo afecta al
+   fondo y nunca al contenido (a diferencia de .noise-overlay) */
+.aura-grain {
+  position: absolute;
+  inset: 0;
+  mix-blend-mode: overlay;
+  opacity: .85;
+  pointer-events: none;
+}
+
+/* Atenuacion del "aurora".
+   El diseno original trae topes en rgb(255,255,255) con blend 'screen'. En un
+   contenedor tipo hero eso dibuja una cinta; como fondo fijo de viewport
+   completo llena la pantalla de cian palido, y entonces las particulas del
+   hero -- rgb(31,147,70) al 30-45% de alpha -- y el texto claro se pierden.
+   Bajando la opacidad el degradado compone sobre #100e0b y vuelve a leerse
+   todo. Sube el valor para mas color, bajalo para mas contraste. */
+.aura-bg--aurora {
+  opacity: .35;
+}
+
+/* OPCIONAL — velo de contraste para la variante "lunar".
+   Ese degradado termina en #71717a (gris claro) en la esquina inferior
+   derecha del viewport, y ahi el texto claro pierde legibilidad.
+   Descomentar para atenuar esa zona sin cambiar el color del degradado.
+   La variante "aurora" no lo necesita: su capa 5 (multiply) ya oscurece. */
+/*
+.aura-bg--lunar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(150deg, transparent 0%, rgba(16, 14, 11, .35) 55%, rgba(16, 14, 11, .6) 100%);
+  pointer-events: none;
+}
+*/
+/* ====== RESALTADOS DE TEXTO EN BLANCO (solo modo oscuro) ======
+   Con el fondo verde el acento verde dentro de los parrafos satura de mas y
+   deja de destacar: verde sobre verde compite en lugar de resaltar. Estos
+   pasan a blanco y siguen resaltando por el peso de la fuente, que ya es
+   bold. Se usa var(--title) y no #fff puro para igualar los encabezados.
+
+   A proposito NO entran aqui: chips de tecnologias, badges, iconos, la
+   sintaxis del bloque de codigo y los enlaces. Ahi el verde no compite con
+   el texto corrido, identifica el elemento, y en el caso del codigo es
+   coloreado de sintaxis. */
+body:not(.light-theme) .about__text strong,
+body:not(.light-theme) .tl__points strong,
+body:not(.light-theme) .faq__a strong,
+body:not(.light-theme) .contact__intro strong,
+body:not(.light-theme) .section__hint strong,
+body:not(.light-theme) .accent {
+  color: var(--title);
+}
+
 /* ====== NOISE OVERLAY ====== */
 .noise-overlay {
   position: fixed;
@@ -4352,6 +4679,7 @@ body.light-theme .bubbles-loader__strich-2 {
   .back-top,
   #hero-canvas,
   .noise-overlay,
+  .aura-bg,
   .loader,
   .float-tag,
   .scroll__hint,

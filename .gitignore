@@ -14,3 +14,7 @@ Desktop.ini
 # Editores
 *.swp
 *~
+
+# Respaldos locales
+*.bak
+_tmp*
